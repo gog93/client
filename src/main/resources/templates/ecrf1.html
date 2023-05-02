@@ -1,0 +1,1894 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>eCRF</title>
+    <!-- css files -->
+    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/fonts/font-awesome.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/css/registration-style.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/css/elements.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/css/check-ecrf-minimal.css"/>
+    <!-- jquery library -->
+    <script type="text/javascript" src="/static/js/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/static/js/survey.js"></script>
+    <script type="text/javascript" src="/static/js/check-ecrf-minimal.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+        });
+    </script>
+</head>
+
+<body>
+<nav class="navbar main-navbar">
+    <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button class="navbar-toggle" type="button" data-target="#responsive-menu" data-toggle="collapse">
+                <span class="sr-only">${open-navigation}</span>
+                <span class="glyphicon-barcode"></span>
+                <span class="glyphicon-barcode"></span>
+                <span class="glyphicon-barcode"></span>
+            </button>
+            <a class="navbar-brand-placeholder" href="#"><img
+                    style="margin-top: 20px; margin-bottom: 20px; left: 72px; top: 60px; width: 190px;"
+                    class="main-logo" alt=""
+                    src="https://medical.org/images/tild3933-3033-4364-b136-386138373934__fullcolor_w_tag-_1_.png"></a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="responsive-menu">
+            <ul class="nav navbar-nav navbar-right remove-right-padding">
+                <li class="signIn"><a href="https://medical.org/yourProfile.html">Back to patient list</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right remove-right-padding">
+                <li class="signIn"><a th:href="${'../ecrf5/' + formObj.surveyTwoId }">Part 5</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right remove-right-padding">
+                <li class="signIn"><a th:href="${'../ecrf4/' + formObj.surveyTwoId }">Part 4</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right remove-right-padding">
+                <li class="signIn"><a th:href="${'../ecrf3/' + formObj.surveyTwoId }">Part 3</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right remove-right-padding">
+                <li class="signIn"><a th:href="${'../ecrf2/' + formObj.surveyTwoId }">Part 2</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right remove-right-padding">
+                <li class="signIn"><a th:href="${'../ecrf1/' + formObj.surveyTwoId }">Part 1</a></li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+</nav>
+
+<div class="registration-page">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2 col-lg-offset-0 col-lg-12">
+                <form accept-charset="UTF-8" class="registration-form onlyForm" method="post" th:object="${formObj}"
+                      th:id="${formObj.surveyTwoId}">
+                    <input type='hidden' id="filling_status" th:field="${formObj.fillingStatus}"/>
+                    <div class="col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2 col-lg-offset-0 col-lg-12">
+                        <div class="top-box text-right">
+                            <button name="action" class="button secondary radius expand survey-button"
+                                    style="margin-bottom: 40px;" onclick='this.blur();next_part();' type="submit"
+                                    value="plot" th:if="${collected == null}">
+                                Next
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2 col-lg-offset-0 col-lg-12">
+                        <div class="top-box text-left">
+                            <h2 class="title">Part 1 - Demographics &amp; Basic Clinical Details</h2>
+                        </div>
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" aria-valuenow="70" aria-valuemin="0"
+                                 aria-valuemax="100"
+                                 style="width:0%;background-image: linear-gradient(to bottom,#33A371 0,#33A371 100%)">
+                                <span class="sr-only">0% Complete</span>
+                            </div>
+                        </div>
+                        <div class="alert alert-warning" role="alert">
+                            <strong>Warning:</strong> The minimal dataset is not complete yet. Please be reminded that
+                            to complete the minimal dataset is mandatory in order to have samples processed for
+                            analysis. Please continue or come back when you can complete at least the minimal dataset.
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group has-extended">
+                                <label for="site">1. Site:</label>
+                                <input type="text" class="form-control" id="site" th:field="${formObj.Site}"
+                                       maxlength='80' placeholder="" onchange="minimum_part_filled_out()" ;/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group has-extended">
+                                <label for="site_PI">2. Principal Investigator:</label>
+                                <input type="text" class="form-control" id="site_PI" th:field="${formObj.SitePI}"
+                                       maxlength='80' placeholder="" onchange="minimum_part_filled_out()" ;/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group has-extended">
+                                <label for="pat_ID">3. PLocal Patient ID:</label>
+                                <input type="text" class="form-control" id="pat_ID" th:field="${formObj.PatID}"
+                                       placeholder="" onchange="minimum_part_filled_out()" ;/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group has-extended">
+                                <label for="local_family_code">4. Local Family Code:</label>
+                                <input type="text" class="form-control" id="local_family_code"
+                                       th:field="${formObj.LocalFamilyCode}" placeholder=""
+                                       onchange="minimum_part_filled_out()" ;/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group has-extended">
+                                <label for="sel1">5. Relationship (Index or type of relation to Index):</label>
+                                <select class="form-control" id="index_or_type_of_relation_to_index"
+                                        th:field="${formObj.IndexOrTypeOfRelationToIndex}"
+                                        onchange="minimum_part_filled_out()" ;>
+                                    <option th:selected="${(formObj.IndexOrTypeOfRelationToIndex == 'Father of index case')}"
+                                            value='Father of index case'>Father of index case
+                                    </option>
+                                    <option th:selected="${(formObj.IndexOrTypeOfRelationToIndex == ' Mother of index case')}"
+                                            value=' Mother of index case'> Mother of index case
+                                    </option>
+                                    <option th:selected="${(formObj.IndexOrTypeOfRelationToIndex == ' Sibling of index case')}"
+                                            value=' Sibling of index case'> Sibling of index case
+                                    </option>
+                                    <option th:selected="${(formObj.IndexOrTypeOfRelationToIndex == ' Child of index case')}"
+                                            value=' Child of index case'> Child of index case
+                                    </option>
+                                    <option th:selected="${(formObj.IndexOrTypeOfRelationToIndex == ' Paternal uncle/aunt of index case')}"
+                                            value=' Paternal uncle/aunt of index case'> Paternal uncle/aunt of index
+                                        case
+                                    </option>
+                                    <option th:selected="${(formObj.IndexOrTypeOfRelationToIndex == ' Maternal uncle/aunt of index case')}"
+                                            value=' Maternal uncle/aunt of index case'> Maternal uncle/aunt of index
+                                        case
+                                    </option>
+                                    <option th:selected="${(formObj.IndexOrTypeOfRelationToIndex == ' Paternal cousin of index case')}"
+                                            value=' Paternal cousin of index case'> Paternal cousin of index case
+                                    </option>
+                                    <option th:selected="${(formObj.IndexOrTypeOfRelationToIndex == ' Maternal cousin of index case')}"
+                                            value=' Maternal cousin of index case'> Maternal cousin of index case
+                                    </option>
+                                    <option th:selected="${(formObj.IndexOrTypeOfRelationToIndex == ' Other')}"
+                                            value=' Other'> Other
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group has-extended">
+                                <label for="other_relation">Other Relation:</label>
+                                <input type="text" class="form-control" id="other_relation"
+                                       th:field="${formObj.OtherRelation}" maxlength='80' placeholder=""
+                                       onchange="minimum_part_filled_out()" ;/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group has-extended">
+                                <label id="dob">6. Date of birth:</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <div class="form-group has-extended">
+
+                                <select class="form-control" id="dob_year" th:field="${formObj.DobYear}"
+                                        onchange="minimum_part_filled_out()" ;>
+                                    <option th:selected="${(formObj.DobYear == 'Year')}" value='Year'>Year</option>
+                                    <option th:selected="${(formObj.DobYear == '2020')}" value='2020'>2020</option>
+                                    <option th:selected="${(formObj.DobYear == '2019')}" value='2019'>2019</option>
+                                    <option th:selected="${(formObj.DobYear == '2018')}" value='2018'>2018</option>
+                                    <option th:selected="${(formObj.DobYear == '2017')}" value='2017'>2017</option>
+                                    <option th:selected="${(formObj.DobYear == '2016')}" value='2016'>2016</option>
+                                    <option th:selected="${(formObj.DobYear == '2015')}" value='2015'>2015</option>
+                                    <option th:selected="${(formObj.DobYear == '2014')}" value='2014'>2014</option>
+                                    <option th:selected="${(formObj.DobYear == '2013')}" value='2013'>2013</option>
+                                    <option th:selected="${(formObj.DobYear == '2012')}" value='2012'>2012</option>
+                                    <option th:selected="${(formObj.DobYear == '2011')}" value='2011'>2011</option>
+                                    <option th:selected="${(formObj.DobYear == '2010')}" value='2010'>2010</option>
+                                    <option th:selected="${(formObj.DobYear == '2009')}" value='2009'>2009</option>
+                                    <option th:selected="${(formObj.DobYear == '2008')}" value='2008'>2008</option>
+                                    <option th:selected="${(formObj.DobYear == '2007')}" value='2007'>2007</option>
+                                    <option th:selected="${(formObj.DobYear == '2006')}" value='2006'>2006</option>
+                                    <option th:selected="${(formObj.DobYear == '2005')}" value='2005'>2005</option>
+                                    <option th:selected="${(formObj.DobYear == '2004')}" value='2004'>2004</option>
+                                    <option th:selected="${(formObj.DobYear == '2003')}" value='2003'>2003</option>
+                                    <option th:selected="${(formObj.DobYear == '2002')}" value='2002'>2002</option>
+                                    <option th:selected="${(formObj.DobYear == '2001')}" value='2001'>2001</option>
+                                    <option th:selected="${(formObj.DobYear == '2000')}" value='2000'>2000</option>
+                                    <option th:selected="${(formObj.DobYear == '1999')}" value='1999'>1999</option>
+                                    <option th:selected="${(formObj.DobYear == '1998')}" value='1998'>1998</option>
+                                    <option th:selected="${(formObj.DobYear == '1997')}" value='1997'>1997</option>
+                                    <option th:selected="${(formObj.DobYear == '1996')}" value='1996'>1996</option>
+                                    <option th:selected="${(formObj.DobYear == '1995')}" value='1995'>1995</option>
+                                    <option th:selected="${(formObj.DobYear == '1994')}" value='1994'>1994</option>
+                                    <option th:selected="${(formObj.DobYear == '1993')}" value='1993'>1993</option>
+                                    <option th:selected="${(formObj.DobYear == '1992')}" value='1992'>1992</option>
+                                    <option th:selected="${(formObj.DobYear == '1991')}" value='1991'>1991</option>
+                                    <option th:selected="${(formObj.DobYear == '1990')}" value='1990'>1990</option>
+                                    <option th:selected="${(formObj.DobYear == '1989')}" value='1989'>1989</option>
+                                    <option th:selected="${(formObj.DobYear == '1988')}" value='1988'>1988</option>
+                                    <option th:selected="${(formObj.DobYear == '1987')}" value='1987'>1987</option>
+                                    <option th:selected="${(formObj.DobYear == '1986')}" value='1986'>1986</option>
+                                    <option th:selected="${(formObj.DobYear == '1985')}" value='1985'>1985</option>
+                                    <option th:selected="${(formObj.DobYear == '1984')}" value='1984'>1984</option>
+                                    <option th:selected="${(formObj.DobYear == '1983')}" value='1983'>1983</option>
+                                    <option th:selected="${(formObj.DobYear == '1982')}" value='1982'>1982</option>
+                                    <option th:selected="${(formObj.DobYear == '1981')}" value='1981'>1981</option>
+                                    <option th:selected="${(formObj.DobYear == '1980')}" value='1980'>1980</option>
+                                    <option th:selected="${(formObj.DobYear == '1979')}" value='1979'>1979</option>
+                                    <option th:selected="${(formObj.DobYear == '1978')}" value='1978'>1978</option>
+                                    <option th:selected="${(formObj.DobYear == '1977')}" value='1977'>1977</option>
+                                    <option th:selected="${(formObj.DobYear == '1976')}" value='1976'>1976</option>
+                                    <option th:selected="${(formObj.DobYear == '1975')}" value='1975'>1975</option>
+                                    <option th:selected="${(formObj.DobYear == '1974')}" value='1974'>1974</option>
+                                    <option th:selected="${(formObj.DobYear == '1973')}" value='1973'>1973</option>
+                                    <option th:selected="${(formObj.DobYear == '1972')}" value='1972'>1972</option>
+                                    <option th:selected="${(formObj.DobYear == '1971')}" value='1971'>1971</option>
+                                    <option th:selected="${(formObj.DobYear == '1970')}" value='1970'>1970</option>
+                                    <option th:selected="${(formObj.DobYear == '1969')}" value='1969'>1969</option>
+                                    <option th:selected="${(formObj.DobYear == '1968')}" value='1968'>1968</option>
+                                    <option th:selected="${(formObj.DobYear == '1967')}" value='1967'>1967</option>
+                                    <option th:selected="${(formObj.DobYear == '1966')}" value='1966'>1966</option>
+                                    <option th:selected="${(formObj.DobYear == '1965')}" value='1965'>1965</option>
+                                    <option th:selected="${(formObj.DobYear == '1964')}" value='1964'>1964</option>
+                                    <option th:selected="${(formObj.DobYear == '1963')}" value='1963'>1963</option>
+                                    <option th:selected="${(formObj.DobYear == '1962')}" value='1962'>1962</option>
+                                    <option th:selected="${(formObj.DobYear == '1961')}" value='1961'>1961</option>
+                                    <option th:selected="${(formObj.DobYear == '1960')}" value='1960'>1960</option>
+                                    <option th:selected="${(formObj.DobYear == '1959')}" value='1959'>1959</option>
+                                    <option th:selected="${(formObj.DobYear == '1958')}" value='1958'>1958</option>
+                                    <option th:selected="${(formObj.DobYear == '1957')}" value='1957'>1957</option>
+                                    <option th:selected="${(formObj.DobYear == '1956')}" value='1956'>1956</option>
+                                    <option th:selected="${(formObj.DobYear == '1955')}" value='1955'>1955</option>
+                                    <option th:selected="${(formObj.DobYear == '1954')}" value='1954'>1954</option>
+                                    <option th:selected="${(formObj.DobYear == '1953')}" value='1953'>1953</option>
+                                    <option th:selected="${(formObj.DobYear == '1952')}" value='1952'>1952</option>
+                                    <option th:selected="${(formObj.DobYear == '1951')}" value='1951'>1951</option>
+                                    <option th:selected="${(formObj.DobYear == '1950')}" value='1950'>1950</option>
+                                    <option th:selected="${(formObj.DobYear == '1949')}" value='1949'>1949</option>
+                                    <option th:selected="${(formObj.DobYear == '1948')}" value='1948'>1948</option>
+                                    <option th:selected="${(formObj.DobYear == '1947')}" value='1947'>1947</option>
+                                    <option th:selected="${(formObj.DobYear == '1946')}" value='1946'>1946</option>
+                                    <option th:selected="${(formObj.DobYear == '1945')}" value='1945'>1945</option>
+                                    <option th:selected="${(formObj.DobYear == '1944')}" value='1944'>1944</option>
+                                    <option th:selected="${(formObj.DobYear == '1943')}" value='1943'>1943</option>
+                                    <option th:selected="${(formObj.DobYear == '1942')}" value='1942'>1942</option>
+                                    <option th:selected="${(formObj.DobYear == '1941')}" value='1941'>1941</option>
+                                    <option th:selected="${(formObj.DobYear == '1940')}" value='1940'>1940</option>
+                                    <option th:selected="${(formObj.DobYear == '1939')}" value='1939'>1939</option>
+                                    <option th:selected="${(formObj.DobYear == '1938')}" value='1938'>1938</option>
+                                    <option th:selected="${(formObj.DobYear == '1937')}" value='1937'>1937</option>
+                                    <option th:selected="${(formObj.DobYear == '1936')}" value='1936'>1936</option>
+                                    <option th:selected="${(formObj.DobYear == '1935')}" value='1935'>1935</option>
+                                    <option th:selected="${(formObj.DobYear == '1934')}" value='1934'>1934</option>
+                                    <option th:selected="${(formObj.DobYear == '1933')}" value='1933'>1933</option>
+                                    <option th:selected="${(formObj.DobYear == '1932')}" value='1932'>1932</option>
+                                    <option th:selected="${(formObj.DobYear == '1931')}" value='1931'>1931</option>
+                                    <option th:selected="${(formObj.DobYear == '1930')}" value='1930'>1930</option>
+                                    <option th:selected="${(formObj.DobYear == '1929')}" value='1929'>1929</option>
+                                    <option th:selected="${(formObj.DobYear == '1928')}" value='1928'>1928</option>
+                                    <option th:selected="${(formObj.DobYear == '1927')}" value='1927'>1927</option>
+                                    <option th:selected="${(formObj.DobYear == '1926')}" value='1926'>1926</option>
+                                    <option th:selected="${(formObj.DobYear == '1925')}" value='1925'>1925</option>
+                                    <option th:selected="${(formObj.DobYear == '1924')}" value='1924'>1924</option>
+                                    <option th:selected="${(formObj.DobYear == '1923')}" value='1923'>1923</option>
+                                    <option th:selected="${(formObj.DobYear == '1922')}" value='1922'>1922</option>
+                                    <option th:selected="${(formObj.DobYear == '1921')}" value='1921'>1921</option>
+                                    <option th:selected="${(formObj.DobYear == '1920')}" value='1920'>1920</option>
+                                    <option th:selected="${(formObj.DobYear == '1919')}" value='1919'>1919</option>
+                                    <option th:selected="${(formObj.DobYear == '1918')}" value='1918'>1918</option>
+                                    <option th:selected="${(formObj.DobYear == '1917')}" value='1917'>1917</option>
+                                    <option th:selected="${(formObj.DobYear == '1916')}" value='1916'>1916</option>
+                                    <option th:selected="${(formObj.DobYear == '1915')}" value='1915'>1915</option>
+                                    <option th:selected="${(formObj.DobYear == '1914')}" value='1914'>1914</option>
+                                    <option th:selected="${(formObj.DobYear == '1913')}" value='1913'>1913</option>
+                                    <option th:selected="${(formObj.DobYear == '1912')}" value='1912'>1912</option>
+                                    <option th:selected="${(formObj.DobYear == '1911')}" value='1911'>1911</option>
+                                    <option th:selected="${(formObj.DobYear == '1910')}" value='1910'>1910</option>
+                                    <option th:selected="${(formObj.DobYear == '1909')}" value='1909'>1909</option>
+                                    <option th:selected="${(formObj.DobYear == '1908')}" value='1908'>1908</option>
+                                    <option th:selected="${(formObj.DobYear == '1907')}" value='1907'>1907</option>
+                                    <option th:selected="${(formObj.DobYear == '1906')}" value='1906'>1906</option>
+                                    <option th:selected="${(formObj.DobYear == '1905')}" value='1905'>1905</option>
+                                    <option th:selected="${(formObj.DobYear == '1904')}" value='1904'>1904</option>
+                                    <option th:selected="${(formObj.DobYear == '1903')}" value='1903'>1903</option>
+                                    <option th:selected="${(formObj.DobYear == '1902')}" value='1902'>1902</option>
+                                    <option th:selected="${(formObj.DobYear == '1901')}" value='1901'>1901</option>
+                                    <option th:selected="${(formObj.DobYear == '1900')}" value='1900'>1900</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <div class="form-group has-extended">
+
+                                <select class="form-control" id="dob_month" th:field="${formObj.DobMonth}"
+                                        onchange="minimum_part_filled_out()" ;>
+                                    <option th:selected="${(formObj.DobMonth == 'Month')}" value='Month'>Month</option>
+                                    <option th:selected="${(formObj.DobMonth == 'Jan')}" value='Jan'>Jan</option>
+                                    <option th:selected="${(formObj.DobMonth == 'Feb')}" value='Feb'>Feb</option>
+                                    <option th:selected="${(formObj.DobMonth == 'Mar')}" value='Mar'>Mar</option>
+                                    <option th:selected="${(formObj.DobMonth == 'Apr')}" value='Apr'>Apr</option>
+                                    <option th:selected="${(formObj.DobMonth == 'May')}" value='May'>May</option>
+                                    <option th:selected="${(formObj.DobMonth == 'June')}" value='June'>June</option>
+                                    <option th:selected="${(formObj.DobMonth == 'July')}" value='July'>July</option>
+                                    <option th:selected="${(formObj.DobMonth == 'Aug')}" value='Aug'>Aug</option>
+                                    <option th:selected="${(formObj.DobMonth == 'Sept')}" value='Sept'>Sept</option>
+                                    <option th:selected="${(formObj.DobMonth == 'Oct')}" value='Oct'>Oct</option>
+                                    <option th:selected="${(formObj.DobMonth == 'Nov')}" value='Nov'>Nov</option>
+                                    <option th:selected="${(formObj.DobMonth == 'Dec')}" value='Dec'>Dec</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-group has-extended">
+                                <label namelabel="sex" for="">7. Sex:</label>
+
+                                <ul class="listing minimal, constant-radio">
+                                    <li>
+                                        <label style="margin-left:10px;">
+                                            <span class="lbl padding-8" style="margin-left:5px;">male</span>
+                                            <input style="margin-left:5px;opacity:100!important;"
+                                                   th:field="${formObj.Sex}" type="radio" name1="sex" value="1"
+                                                   onchange="__main__(); minimum_part_filled_out(); "/>
+                                        </label>
+                                    </li>
+                                    <li>
+                                        <label style="margin-left:10px;">
+                                            <span class="lbl padding-8" style="margin-left:5px;"> female</span>
+                                            <input style="margin-left:5px;opacity:100!important;"
+                                                   th:field="${formObj.Sex}" type="radio" name1="sex" value="2"
+                                                   onchange="__main__(); minimum_part_filled_out(); "/>
+                                        </label>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group has-extended">
+                                <label for="sel1">8. Ethnicity (check all that apply): </label>
+                                <select class="form-control" id="ethn" th:field="${formObj.Ethn}"
+                                        onchange="minimum_part_filled_out()" ;>
+                                    <option th:selected="${(formObj.Ethn == '-')}" value='-'>-</option>
+                                    <option th:selected="${(formObj.Ethn == 'American Indian/ Alaska Native')}"
+                                            value='American Indian/ Alaska Native'>American Indian/ Alaska Native
+                                    </option>
+                                    <option th:selected="${(formObj.Ethn == 'Arab')}" value='Arab'>Arab</option>
+                                    <option th:selected="${(formObj.Ethn == 'Asian')}" value='Asian'>Asian</option>
+                                    <option th:selected="${(formObj.Ethn == 'Black or African American')}"
+                                            value='Black or African American'>Black or African American
+                                    </option>
+                                    <option th:selected="${(formObj.Ethn == 'Hispanic/ Latino')}"
+                                            value='Hispanic/ Latino'>Hispanic/ Latino
+                                    </option>
+                                    <option th:selected="${(formObj.Ethn == 'Jewish (Ashkenazi)')}"
+                                            value='Jewish (Ashkenazi)'>Jewish (Ashkenazi)
+                                    </option>
+                                    <option th:selected="${(formObj.Ethn == 'Jewish (non-Ashkenazi)')}"
+                                            value='Jewish (non-Ashkenazi)'>Jewish (non-Ashkenazi)
+                                    </option>
+                                    <option th:selected="${(formObj.Ethn == 'Native Hawaiian/ Other Pacific Islander')}"
+                                            value='Native Hawaiian/ Other Pacific Islander'>Native Hawaiian/ Other
+                                        Pacific Islander
+                                    </option>
+                                    <option th:selected="${(formObj.Ethn == 'White/ European/ Caucasian')}"
+                                            value='White/ European/ Caucasian'>White/ European/ Caucasian
+                                    </option>
+                                    <option th:selected="${(formObj.Ethn == 'Other')}" value='Other'>Other</option>
+                                    <option th:selected="${(formObj.Ethn == 'Unknown')}" value='Unknown'>Unknown
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group has-extended">
+                                <label for="ethn_oth">Other, please state:</label>
+                                <input type="text" class="form-control" id="ethn_oth" th:field="${formObj.EthnOth}"
+                                       placeholder="" onchange="minimum_part_filled_out()" ;/>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group has-extended">
+                                <label for="sel1">Asian:</label>
+                                <select class="form-control" id="ethn_as" th:field="${formObj.EthnAs}"
+                                        onchange="minimum_part_filled_out()" ;>
+                                    <option th:selected="${(formObj.EthnAs == '-')}" value='-'>-</option>
+                                    <option th:selected="${(formObj.EthnAs == 'Chinese')}" value='Chinese'>Chinese
+                                    </option>
+                                    <option th:selected="${(formObj.EthnAs == 'Indian')}" value='Indian'>Indian</option>
+                                    <option th:selected="${(formObj.EthnAs == 'Filipino')}" value='Filipino'>Filipino
+                                    </option>
+                                    <option th:selected="${(formObj.EthnAs == 'Japanese')}" value='Japanese'>Japanese
+                                    </option>
+                                    <option th:selected="${(formObj.EthnAs == 'Korean')}" value='Korean'>Korean</option>
+                                    <option th:selected="${(formObj.EthnAs == 'Malay')}" value='Malay'>Malay</option>
+                                    <option th:selected="${(formObj.EthnAs == 'Central Asian')}" value='Central Asian'>
+                                        Central Asian
+                                    </option>
+                                    <option th:selected="${(formObj.EthnAs == 'Other')}" value='Other'>Other</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group has-extended">
+                                <label for="ethn_as_oth">Other, please state:</label>
+                                <input type="text" class="form-control" id="ethn_as_oth" th:field="${formObj.EthnAsOth}"
+                                       placeholder="" onchange="minimum_part_filled_out()" ;/>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-group has-extended">
+                                <label namelabel="consang" for="">9. Parental consanguinity ("Are your parents related
+                                    by blood? For example, could they be cousins?")</label>
+
+                                <ul class="listing minimal, constant-radio">
+                                    <li>
+                                        <label style="margin-left:10px;">
+                                            <span class="lbl padding-8" style="margin-left:5px;">no</span>
+                                            <input style="margin-left:5px;opacity:100!important;"
+                                                   th:field="${formObj.Consang}" type="radio" name1="consang" value="0"
+                                                   onchange="__main__(); minimum_part_filled_out(); "/>
+                                        </label>
+                                    </li>
+                                    <li>
+                                        <label style="margin-left:10px;">
+                                            <span class="lbl padding-8" style="margin-left:5px;"> yes</span>
+                                            <input style="margin-left:5px;opacity:100!important;"
+                                                   th:field="${formObj.Consang}" type="radio" name1="consang"
+                                                   value="1 (please describe:)"
+                                                   onchange="__main__(); minimum_part_filled_out(); "/>
+                                        </label>
+                                    </li>
+                                    <li>
+                                        <label style="margin-left:10px;">
+                                            <span class="lbl padding-8" style="margin-left:5px;"> possibly</span>
+                                            <input style="margin-left:5px;opacity:100!important;"
+                                                   th:field="${formObj.Consang}" type="radio" name1="consang"
+                                                   value="2 (please describe:) "
+                                                   onchange="__main__(); minimum_part_filled_out(); "/>
+                                        </label>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group has-extended">
+                                <label for="consang_oth">Please describe:</label>
+                                <input type="text" class="form-control" id="consang_oth"
+                                       th:field="${formObj.ConsangOth}" placeholder=""
+                                       onchange="minimum_part_filled_out()" ;/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group has-minimal">
+                                <label for="sel1">10. Country where patient has lived most of his/her life:</label>
+                                <select class="form-control" id="country" th:field="${formObj.Country}"
+                                        onchange="minimum_part_filled_out()" ;>
+                                    <option th:selected="${(formObj.Country == '-')}" value='-'>-</option>
+                                    <option th:selected="${(formObj.Country == 'Afghanistan')}" value='Afghanistan'>
+                                        Afghanistan
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Albania')}" value='Albania'>Albania
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Algeria')}" value='Algeria'>Algeria
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'American Samoa')}"
+                                            value='American Samoa'>American Samoa
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Andorra')}" value='Andorra'>Andorra
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Angola')}" value='Angola'>Angola
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Anguilla')}" value='Anguilla'>Anguilla
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Antarctica')}" value='Antarctica'>
+                                        Antarctica
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Antigua and Barbuda')}"
+                                            value='Antigua and Barbuda'>Antigua and Barbuda
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Argentina')}" value='Argentina'>
+                                        Argentina
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Armenia')}" value='Armenia'>Armenia
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Aruba')}" value='Aruba'>Aruba</option>
+                                    <option th:selected="${(formObj.Country == 'Australia')}" value='Australia'>
+                                        Australia
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Austria')}" value='Austria'>Austria
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Azerbaijan')}" value='Azerbaijan'>
+                                        Azerbaijan
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Bahamas')}" value='Bahamas'>Bahamas
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Bahrain')}" value='Bahrain'>Bahrain
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Bangladesh')}" value='Bangladesh'>
+                                        Bangladesh
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Barbados')}" value='Barbados'>Barbados
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Belarus')}" value='Belarus'>Belarus
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Belgium')}" value='Belgium'>Belgium
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Belize')}" value='Belize'>Belize
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Benin')}" value='Benin'>Benin</option>
+                                    <option th:selected="${(formObj.Country == 'Bermuda')}" value='Bermuda'>Bermuda
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Bhutan')}" value='Bhutan'>Bhutan
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Bolivia')}" value='Bolivia'>Bolivia
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Bosnia and Herzegovina')}"
+                                            value='Bosnia and Herzegovina'>Bosnia and Herzegovina
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Botswana')}" value='Botswana'>Botswana
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Brazil')}" value='Brazil'>Brazil
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'British Indian Ocean Territory')}"
+                                            value='British Indian Ocean Territory'>British Indian Ocean Territory
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'British Virgin Islands')}"
+                                            value='British Virgin Islands'>British Virgin Islands
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Brunei')}" value='Brunei'>Brunei
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Bulgaria')}" value='Bulgaria'>Bulgaria
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Burkina Faso')}" value='Burkina Faso'>
+                                        Burkina Faso
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Burundi')}" value='Burundi'>Burundi
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Cambodia')}" value='Cambodia'>Cambodia
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Cameroon')}" value='Cameroon'>Cameroon
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Canada')}" value='Canada'>Canada
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Cape Verde')}" value='Cape Verde'>Cape
+                                        Verde
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Cayman Islands')}"
+                                            value='Cayman Islands'>Cayman Islands
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Central African Republic')}"
+                                            value='Central African Republic'>Central African Republic
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Chad')}" value='Chad'>Chad</option>
+                                    <option th:selected="${(formObj.Country == 'Chile')}" value='Chile'>Chile</option>
+                                    <option th:selected="${(formObj.Country == 'China')}" value='China'>China</option>
+                                    <option th:selected="${(formObj.Country == 'Christmas Island')}"
+                                            value='Christmas Island'>Christmas Island
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Cocos Islands')}" value='Cocos Islands'>
+                                        Cocos Islands
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Colombia')}" value='Colombia'>Colombia
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Comoros')}" value='Comoros'>Comoros
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Cook Islands')}" value='Cook Islands'>
+                                        Cook Islands
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Costa Rica')}" value='Costa Rica'>Costa
+                                        Rica
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Croatia')}" value='Croatia'>Croatia
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Cuba')}" value='Cuba'>Cuba</option>
+                                    <option th:selected="${(formObj.Country == 'Curacao')}" value='Curacao'>Curacao
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Cyprus')}" value='Cyprus'>Cyprus
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Czech Republic')}"
+                                            value='Czech Republic'>Czech Republic
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Democratic Republic of the Congo')}"
+                                            value='Democratic Republic of the Congo'>Democratic Republic of the Congo
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Denmark')}" value='Denmark'>Denmark
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Djibouti')}" value='Djibouti'>Djibouti
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Dominica')}" value='Dominica'>Dominica
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Dominican Republic')}"
+                                            value='Dominican Republic'>Dominican Republic
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'East Timor')}" value='East Timor'>East
+                                        Timor
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Ecuador')}" value='Ecuador'>Ecuador
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Egypt')}" value='Egypt'>Egypt</option>
+                                    <option th:selected="${(formObj.Country == 'El Salvador')}" value='El Salvador'>El
+                                        Salvador
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Equatorial Guinea')}"
+                                            value='Equatorial Guinea'>Equatorial Guinea
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Eritrea')}" value='Eritrea'>Eritrea
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Estonia')}" value='Estonia'>Estonia
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Ethiopia')}" value='Ethiopia'>Ethiopia
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Falkland Islands')}"
+                                            value='Falkland Islands'>Falkland Islands
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Faroe Islands')}" value='Faroe Islands'>
+                                        Faroe Islands
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Fiji')}" value='Fiji'>Fiji</option>
+                                    <option th:selected="${(formObj.Country == 'Finland')}" value='Finland'>Finland
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'France')}" value='France'>France
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'French Polynesia')}"
+                                            value='French Polynesia'>French Polynesia
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Gabon')}" value='Gabon'>Gabon</option>
+                                    <option th:selected="${(formObj.Country == 'Gambia')}" value='Gambia'>Gambia
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Georgia')}" value='Georgia'>Georgia
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Germany')}" value='Germany'>Germany
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Ghana')}" value='Ghana'>Ghana</option>
+                                    <option th:selected="${(formObj.Country == 'Gibraltar')}" value='Gibraltar'>
+                                        Gibraltar
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Greece')}" value='Greece'>Greece
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Greenland')}" value='Greenland'>
+                                        Greenland
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Grenada')}" value='Grenada'>Grenada
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Guam')}" value='Guam'>Guam</option>
+                                    <option th:selected="${(formObj.Country == 'Guatemala')}" value='Guatemala'>
+                                        Guatemala
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Guernsey')}" value='Guernsey'>Guernsey
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Guinea')}" value='Guinea'>Guinea
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Guinea-Bissau')}" value='Guinea-Bissau'>
+                                        Guinea-Bissau
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Guyana')}" value='Guyana'>Guyana
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Haiti')}" value='Haiti'>Haiti</option>
+                                    <option th:selected="${(formObj.Country == 'Honduras')}" value='Honduras'>Honduras
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Hong Kong')}" value='Hong Kong'>Hong
+                                        Kong
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Hungary')}" value='Hungary'>Hungary
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Iceland')}" value='Iceland'>Iceland
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'India')}" value='India'>India</option>
+                                    <option th:selected="${(formObj.Country == 'Indonesia')}" value='Indonesia'>
+                                        Indonesia
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Iran')}" value='Iran'>Iran</option>
+                                    <option th:selected="${(formObj.Country == 'Iraq')}" value='Iraq'>Iraq</option>
+                                    <option th:selected="${(formObj.Country == 'Ireland')}" value='Ireland'>Ireland
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Isle of Man')}" value='Isle of Man'>Isle
+                                        of Man
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Israel')}" value='Israel'>Israel
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Italy')}" value='Italy'>Italy</option>
+                                    <option th:selected="${(formObj.Country == 'Ivory Coast')}" value='Ivory Coast'>
+                                        Ivory Coast
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Jamaica')}" value='Jamaica'>Jamaica
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Japan')}" value='Japan'>Japan</option>
+                                    <option th:selected="${(formObj.Country == 'Jersey')}" value='Jersey'>Jersey
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Jordan')}" value='Jordan'>Jordan
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Kazakhstan')}" value='Kazakhstan'>
+                                        Kazakhstan
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Kenya')}" value='Kenya'>Kenya</option>
+                                    <option th:selected="${(formObj.Country == 'Kiribati')}" value='Kiribati'>Kiribati
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Kosovo')}" value='Kosovo'>Kosovo
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Kuwait')}" value='Kuwait'>Kuwait
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Kyrgyzstan')}" value='Kyrgyzstan'>
+                                        Kyrgyzstan
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Laos')}" value='Laos'>Laos</option>
+                                    <option th:selected="${(formObj.Country == 'Latvia')}" value='Latvia'>Latvia
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Lebanon')}" value='Lebanon'>Lebanon
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Lesotho')}" value='Lesotho'>Lesotho
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Liberia')}" value='Liberia'>Liberia
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Libya')}" value='Libya'>Libya</option>
+                                    <option th:selected="${(formObj.Country == 'Liechtenstein')}" value='Liechtenstein'>
+                                        Liechtenstein
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Lithuania')}" value='Lithuania'>
+                                        Lithuania
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Luxembourg')}" value='Luxembourg'>
+                                        Luxembourg
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Macau')}" value='Macau'>Macau</option>
+                                    <option th:selected="${(formObj.Country == 'Macedonia')}" value='Macedonia'>
+                                        Macedonia
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Madagascar')}" value='Madagascar'>
+                                        Madagascar
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Malawi')}" value='Malawi'>Malawi
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Malaysia')}" value='Malaysia'>Malaysia
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Maldives')}" value='Maldives'>Maldives
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Mali')}" value='Mali'>Mali</option>
+                                    <option th:selected="${(formObj.Country == 'Malta')}" value='Malta'>Malta</option>
+                                    <option th:selected="${(formObj.Country == 'Marshall Islands')}"
+                                            value='Marshall Islands'>Marshall Islands
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Mauritania')}" value='Mauritania'>
+                                        Mauritania
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Mauritius')}" value='Mauritius'>
+                                        Mauritius
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Mayotte')}" value='Mayotte'>Mayotte
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Mexico')}" value='Mexico'>Mexico
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Micronesia')}" value='Micronesia'>
+                                        Micronesia
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Moldova')}" value='Moldova'>Moldova
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Monaco')}" value='Monaco'>Monaco
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Mongolia')}" value='Mongolia'>Mongolia
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Montenegro')}" value='Montenegro'>
+                                        Montenegro
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Montserrat')}" value='Montserrat'>
+                                        Montserrat
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Morocco')}" value='Morocco'>Morocco
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Mozambique')}" value='Mozambique'>
+                                        Mozambique
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Myanmar')}" value='Myanmar'>Myanmar
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Namibia')}" value='Namibia'>Namibia
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Nauru')}" value='Nauru'>Nauru</option>
+                                    <option th:selected="${(formObj.Country == 'Nepal')}" value='Nepal'>Nepal</option>
+                                    <option th:selected="${(formObj.Country == 'Netherlands')}" value='Netherlands'>
+                                        Netherlands
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Netherlands Antilles')}"
+                                            value='Netherlands Antilles'>Netherlands Antilles
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'New Caledonia')}" value='New Caledonia'>
+                                        New Caledonia
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'New Zealand')}" value='New Zealand'>New
+                                        Zealand
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Nicaragua')}" value='Nicaragua'>
+                                        Nicaragua
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Niger')}" value='Niger'>Niger</option>
+                                    <option th:selected="${(formObj.Country == 'Nigeria')}" value='Nigeria'>Nigeria
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Niue')}" value='Niue'>Niue</option>
+                                    <option th:selected="${(formObj.Country == 'North Korea')}" value='North Korea'>
+                                        North Korea
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Northern Mariana Islands')}"
+                                            value='Northern Mariana Islands'>Northern Mariana Islands
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Norway')}" value='Norway'>Norway
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Oman')}" value='Oman'>Oman</option>
+                                    <option th:selected="${(formObj.Country == 'Pakistan')}" value='Pakistan'>Pakistan
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Palau')}" value='Palau'>Palau</option>
+                                    <option th:selected="${(formObj.Country == 'Palestine')}" value='Palestine'>
+                                        Palestine
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Panama')}" value='Panama'>Panama
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Papua New Guinea')}"
+                                            value='Papua New Guinea'>Papua New Guinea
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Paraguay')}" value='Paraguay'>Paraguay
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Peru')}" value='Peru'>Peru</option>
+                                    <option th:selected="${(formObj.Country == 'Philippines')}" value='Philippines'>
+                                        Philippines
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Pitcairn')}" value='Pitcairn'>Pitcairn
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Poland')}" value='Poland'>Poland
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Portugal')}" value='Portugal'>Portugal
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Puerto Rico')}" value='Puerto Rico'>
+                                        Puerto Rico
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Qatar')}" value='Qatar'>Qatar</option>
+                                    <option th:selected="${(formObj.Country == 'Republic of the Congo')}"
+                                            value='Republic of the Congo'>Republic of the Congo
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Reunion')}" value='Reunion'>Reunion
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Romania')}" value='Romania'>Romania
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Russia')}" value='Russia'>Russia
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Rwanda')}" value='Rwanda'>Rwanda
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Saint Barthelemy')}"
+                                            value='Saint Barthelemy'>Saint Barthelemy
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Saint Helena')}" value='Saint Helena'>
+                                        Saint Helena
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Saint Kitts and Nevis')}"
+                                            value='Saint Kitts and Nevis'>Saint Kitts and Nevis
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Saint Lucia')}" value='Saint Lucia'>
+                                        Saint Lucia
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Saint Martin')}" value='Saint Martin'>
+                                        Saint Martin
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Saint Pierre and Miquelon')}"
+                                            value='Saint Pierre and Miquelon'>Saint Pierre and Miquelon
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Saint Vincent and the Grenadines')}"
+                                            value='Saint Vincent and the Grenadines'>Saint Vincent and the Grenadines
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Samoa')}" value='Samoa'>Samoa</option>
+                                    <option th:selected="${(formObj.Country == 'San Marino')}" value='San Marino'>San
+                                        Marino
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Sao Tome and Principe')}"
+                                            value='Sao Tome and Principe'>Sao Tome and Principe
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Saudi Arabia')}" value='Saudi Arabia'>
+                                        Saudi Arabia
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Senegal')}" value='Senegal'>Senegal
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Serbia')}" value='Serbia'>Serbia
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Seychelles')}" value='Seychelles'>
+                                        Seychelles
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Sierra Leone')}" value='Sierra Leone'>
+                                        Sierra Leone
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Singapore')}" value='Singapore'>
+                                        Singapore
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Sint Maarten')}" value='Sint Maarten'>
+                                        Sint Maarten
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Slovakia')}" value='Slovakia'>Slovakia
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Slovenia')}" value='Slovenia'>Slovenia
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Solomon Islands')}"
+                                            value='Solomon Islands'>Solomon Islands
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Somalia')}" value='Somalia'>Somalia
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'South Africa')}" value='South Africa'>
+                                        South Africa
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'South Korea')}" value='South Korea'>
+                                        South Korea
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'South Sudan')}" value='South Sudan'>
+                                        South Sudan
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Spain')}" value='Spain'>Spain</option>
+                                    <option th:selected="${(formObj.Country == 'Sri Lanka')}" value='Sri Lanka'>Sri
+                                        Lanka
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Sudan')}" value='Sudan'>Sudan</option>
+                                    <option th:selected="${(formObj.Country == 'Suriname')}" value='Suriname'>Suriname
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Svalbard and Jan Mayen')}"
+                                            value='Svalbard and Jan Mayen'>Svalbard and Jan Mayen
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Swaziland')}" value='Swaziland'>
+                                        Swaziland
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Sweden')}" value='Sweden'>Sweden
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Switzerland')}" value='Switzerland'>
+                                        Switzerland
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Syria')}" value='Syria'>Syria</option>
+                                    <option th:selected="${(formObj.Country == 'Taiwan')}" value='Taiwan'>Taiwan
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Tajikistan')}" value='Tajikistan'>
+                                        Tajikistan
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Tanzania')}" value='Tanzania'>Tanzania
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Thailand')}" value='Thailand'>Thailand
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Togo')}" value='Togo'>Togo</option>
+                                    <option th:selected="${(formObj.Country == 'Tokelau')}" value='Tokelau'>Tokelau
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Tonga')}" value='Tonga'>Tonga</option>
+                                    <option th:selected="${(formObj.Country == 'Trinidad and Tobago')}"
+                                            value='Trinidad and Tobago'>Trinidad and Tobago
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Tunisia')}" value='Tunisia'>Tunisia
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Turkey')}" value='Turkey'>Turkey
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Turkmenistan')}" value='Turkmenistan'>
+                                        Turkmenistan
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Turks and Caicos Islands')}"
+                                            value='Turks and Caicos Islands'>Turks and Caicos Islands
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Tuvalu')}" value='Tuvalu'>Tuvalu
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'U.S. Virgin Islands')}"
+                                            value='U.S. Virgin Islands'>U.S. Virgin Islands
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Uganda')}" value='Uganda'>Uganda
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Ukraine')}" value='Ukraine'>Ukraine
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'United Arab Emirates')}"
+                                            value='United Arab Emirates'>United Arab Emirates
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'United Kingdom')}"
+                                            value='United Kingdom'>United Kingdom
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'United States')}" value='United States'>
+                                        United States
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Uruguay')}" value='Uruguay'>Uruguay
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Uzbekistan')}" value='Uzbekistan'>
+                                        Uzbekistan
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Vanuatu')}" value='Vanuatu'>Vanuatu
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Vatican')}" value='Vatican'>Vatican
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Venezuela')}" value='Venezuela'>
+                                        Venezuela
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Vietnam')}" value='Vietnam'>Vietnam
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Wallis and Futuna')}"
+                                            value='Wallis and Futuna'>Wallis and Futuna
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Western Sahara')}"
+                                            value='Western Sahara'>Western Sahara
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Yemen')}" value='Yemen'>Yemen</option>
+                                    <option th:selected="${(formObj.Country == 'Zambia')}" value='Zambia'>Zambia
+                                    </option>
+                                    <option th:selected="${(formObj.Country == 'Zimbabwe')}" value='Zimbabwe'>Zimbabwe
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group has-core">
+                                <label namelabel="educ" for="">11. Education completed:</label>
+
+                                <ul class="listing core-checkbox">
+                                    <li>
+                                        <label style="margin-left:10px;">
+                                            <span class="lbl padding-8" style="margin-left:5px;">Primary</span>
+                                            <input style="margin-left:5px;opacity:100!important;"
+                                                   th:field="${formObj.Educ0}" type="checkbox" name1="educ" value="1"
+                                                   onchange="__main__(); minimum_part_filled_out(); "/>
+                                        </label>
+                                    </li>
+                                    <li>
+                                        <label style="margin-left:10px;">
+                                            <span class="lbl padding-8" style="margin-left:5px;"> Secondary</span>
+                                            <input style="margin-left:5px;opacity:100!important;"
+                                                   th:field="${formObj.Educ1}" type="checkbox" name1="educ" value="2"
+                                                   onchange="__main__(); minimum_part_filled_out(); "/>
+                                        </label>
+                                    </li>
+                                    <li>
+                                        <label style="margin-left:10px;">
+                                            <span class="lbl padding-8" style="margin-left:5px;"> Tertiary</span>
+                                            <input style="margin-left:5px;opacity:100!important;"
+                                                   th:field="${formObj.Educ2}" type="checkbox" name1="educ" value="3"
+                                                   onchange="__main__(); minimum_part_filled_out(); "/>
+                                        </label>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group has-core">
+                                <label for="sel1">12. Longest lifetime occupation: </label>
+                                <select class="form-control" id="occup" th:field="${formObj.Occup}"
+                                        onchange="minimum_part_filled_out()" ;>
+                                    <option th:selected="${(formObj.Occup == '-')}" value='-'>-</option>
+                                    <option th:selected="${(formObj.Occup == ' Homemaker')}" value=' Homemaker'>
+                                        Homemaker
+                                    </option>
+                                    <option th:selected="${(formObj.Occup == ' Managerial or executive (11-0000, 13-0000)')}"
+                                            value=' Managerial or executive (11-0000, 13-0000)'> Managerial or executive
+                                        (11-0000, 13-0000)
+                                    </option>
+                                    <option th:selected="${(formObj.Occup == ' Computer or mathematical (e.g., IT specialist, web developer, data scientist) (15-0000)')}"
+                                            value=' Computer or mathematical (e.g., IT specialist, web developer, data scientist) (15-0000)'>
+                                        Computer or mathematical (e.g., IT specialist, web developer, data scientist)
+                                        (15-0000)
+                                    </option>
+                                    <option th:selected="${(formObj.Occup == ' Architecture or engineering (17-0000)')}"
+                                            value=' Architecture or engineering (17-0000)'> Architecture or engineering
+                                        (17-0000)
+                                    </option>
+                                    <option th:selected="${(formObj.Occup == ' Scientist (life, physical/chemical) (19-0000)')}"
+                                            value=' Scientist (life, physical/chemical) (19-0000)'> Scientist (life,
+                                        physical/chemical) (19-0000)
+                                    </option>
+                                    <option th:selected="${(formObj.Occup == ' Religious worker (21-2000)')}"
+                                            value=' Religious worker (21-2000)'> Religious worker (21-2000)
+                                    </option>
+                                    <option th:selected="${(formObj.Occup == ' Other community/social service occupation (e.g., counselor, social worker) (21-1000)')}"
+                                            value=' Other community/social service occupation (e.g., counselor, social worker) (21-1000)'>
+                                        Other community/social service occupation (e.g., counselor, social worker)
+                                        (21-1000)
+                                    </option>
+                                    <option th:selected="${(formObj.Occup == ' Legal (e.g., lawyer, judge, paralegal) (23-0000)')}"
+                                            value=' Legal (e.g., lawyer, judge, paralegal) (23-0000)'> Legal (e.g.,
+                                        lawyer, judge, paralegal) (23-0000)
+                                    </option>
+                                    <option th:selected="${(formObj.Occup == ' Teacher (pre-school, primary, secondary, post-secondary) (25-0000)')}"
+                                            value=' Teacher (pre-school, primary, secondary, post-secondary) (25-0000)'>
+                                        Teacher (pre-school, primary, secondary, post-secondary) (25-0000)
+                                    </option>
+                                    <option th:selected="${(formObj.Occup == ' Art or design worker (27-1000)')}"
+                                            value=' Art or design worker (27-1000)'> Art or design worker (27-1000)
+                                    </option>
+                                    <option th:selected="${(formObj.Occup == ' Entertainer or performer (27-2000)')}"
+                                            value=' Entertainer or performer (27-2000)'> Entertainer or performer
+                                        (27-2000)
+                                    </option>
+                                    <option th:selected="${(formObj.Occup == ' Sports (e.g., athlete, coach, umpire) (27-2020)')}"
+                                            value=' Sports (e.g., athlete, coach, umpire) (27-2020)'> Sports (e.g.,
+                                        athlete, coach, umpire) (27-2020)
+                                    </option>
+                                    <option th:selected="${(formObj.Occup == ' Writer/author (27-3043)')}"
+                                            value=' Writer/author (27-3043)'> Writer/author (27-3043)
+                                    </option>
+                                    <option th:selected="${(formObj.Occup == ' Other media and communication worker (27-3000)')}"
+                                            value=' Other media and communication worker (27-3000)'> Other media and
+                                        communication worker (27-3000)
+                                    </option>
+                                    <option th:selected="${(formObj.Occup == ' Dentist (29-1020) or Physician (29-1210)')}"
+                                            value=' Dentist (29-1020) or Physician (29-1210)'> Dentist (29-1020) or
+                                        Physician (29-1210)
+                                    </option>
+                                    <option th:selected="${(formObj.Occup == ' Nurse (29-1140)')}"
+                                            value=' Nurse (29-1140)'> Nurse (29-1140)
+                                    </option>
+                                    <option th:selected="${(formObj.Occup == ' Other healthcare diagnosing or treating practitioner (e.g., chiropractor, physical, occupational or speech therapist, pharmacist) (29-1000)')}"
+                                            value=' Other healthcare diagnosing or treating practitioner (e.g., chiropractor, physical, occupational or speech therapist, pharmacist) (29-1000)'>
+                                        Other healthcare diagnosing or treating practitioner (e.g., chiropractor,
+                                        physical, occupational or speech therapist, pharmacist) (29-1000)
+                                    </option>
+                                    <option th:selected="${(formObj.Occup == ' Veterinarian (29-1130)')}"
+                                            value=' Veterinarian (29-1130)'> Veterinarian (29-1130)
+                                    </option>
+                                    <option th:selected="${(formObj.Occup == ' Healthcare support (e.g., orderly, personal care aide) (31-0000)')}"
+                                            value=' Healthcare support (e.g., orderly, personal care aide) (31-0000)'>
+                                        Healthcare support (e.g., orderly, personal care aide) (31-0000)
+                                    </option>
+                                    <option th:selected="${(formObj.Occup == ' Protective service (police, security, firefighting) (33-0000)')}"
+                                            value=' Protective service (police, security, firefighting) (33-0000)'>
+                                        Protective service (police, security, firefighting) (33-0000)
+                                    </option>
+                                    <option th:selected="${(formObj.Occup == ' Food preparation and serving (35-0000)')}"
+                                            value=' Food preparation and serving (35-0000)'> Food preparation and
+                                        serving (35-0000)
+                                    </option>
+                                    <option th:selected="${(formObj.Occup == ' Landscaping/gardening (37-3011)')}"
+                                            value=' Landscaping/gardening (37-3011)'> Landscaping/gardening (37-3011)
+                                    </option>
+                                    <option th:selected="${(formObj.Occup == ' Pesticide handler/sprayer/applicator (37-3012)')}"
+                                            value=' Pesticide handler/sprayer/applicator (37-3012)'> Pesticide
+                                        handler/sprayer/applicator (37-3012)
+                                    </option>
+                                    <option th:selected="${(formObj.Occup == ' Other building and grounds cleaning and maintenance (37-0000)')}"
+                                            value=' Other building and grounds cleaning and maintenance (37-0000)'>
+                                        Other building and grounds cleaning and maintenance (37-0000)
+                                    </option>
+                                    <option th:selected="${(formObj.Occup == ' Personal appearance (e.g., barber, hairdresser, pedicurist) (39-5000)')}"
+                                            value=' Personal appearance (e.g., barber, hairdresser, pedicurist) (39-5000)'>
+                                        Personal appearance (e.g., barber, hairdresser, pedicurist) (39-5000)
+                                    </option>
+                                    <option th:selected="${(formObj.Occup == ' Tour/travel guide (39-7000)')}"
+                                            value=' Tour/travel guide (39-7000)'> Tour/travel guide (39-7000)
+                                    </option>
+                                    <option th:selected="${(formObj.Occup == ' Sales and related (e.g., retail, wholesale) (41-0000)')}"
+                                            value=' Sales and related (e.g., retail, wholesale) (41-0000)'> Sales and
+                                        related (e.g., retail, wholesale) (41-0000)
+                                    </option>
+                                    <option th:selected="${(formObj.Occup == ' Office and administrative support (e.g., secretary, clerk) (43-0000)')}"
+                                            value=' Office and administrative support (e.g., secretary, clerk) (43-0000)'>
+                                        Office and administrative support (e.g., secretary, clerk) (43-0000)
+                                    </option>
+                                    <option th:selected="${(formObj.Occup == ' Agriculture (e.g., farming) (45-2000)')}"
+                                            value=' Agriculture (e.g., farming) (45-2000)'> Agriculture (e.g., farming)
+                                        (45-2000)
+                                    </option>
+                                    <option th:selected="${(formObj.Occup == ' Fishing or hunting (45-3000)')}"
+                                            value=' Fishing or hunting (45-3000)'> Fishing or hunting (45-3000)
+                                    </option>
+                                    <option th:selected="${(formObj.Occup == ' Construction trade (e.g., labourer, tile setter, carpenter, electrician) (47-2000)')}"
+                                            value=' Construction trade (e.g., labourer, tile setter, carpenter, electrician) (47-2000)'>
+                                        Construction trade (e.g., labourer, tile setter, carpenter, electrician)
+                                        (47-2000)
+                                    </option>
+                                    <option th:selected="${(formObj.Occup == ' Extraction worker (e.g., oil and gas mining, rock quarry) (47-5000)')}"
+                                            value=' Extraction worker (e.g., oil and gas mining, rock quarry) (47-5000)'>
+                                        Extraction worker (e.g., oil and gas mining, rock quarry) (47-5000)
+                                    </option>
+                                    <option th:selected="${(formObj.Occup == ' Electrical/electronic equipment mechanic/installer/repairer (e.g., telecommunications equipment) (49-2000)')}"
+                                            value=' Electrical/electronic equipment mechanic/installer/repairer (e.g., telecommunications equipment) (49-2000)'>
+                                        Electrical/electronic equipment mechanic/installer/repairer (e.g.,
+                                        telecommunications equipment) (49-2000)
+                                    </option>
+                                    <option th:selected="${(formObj.Occup == ' Vehicle mechanic/installer/repairer (49-3000)')}"
+                                            value=' Vehicle mechanic/installer/repairer (49-3000)'> Vehicle
+                                        mechanic/installer/repairer (49-3000)
+                                    </option>
+                                    <option th:selected="${(formObj.Occup == ' Assembler (e.g., production of electrical/electronic equipment, watches, vehicles, other machines) (51-2000)')}"
+                                            value=' Assembler (e.g., production of electrical/electronic equipment, watches, vehicles, other machines) (51-2000)'>
+                                        Assembler (e.g., production of electrical/electronic equipment, watches,
+                                        vehicles, other machines) (51-2000)
+                                    </option>
+                                    <option th:selected="${(formObj.Occup == ' Food processing (e.g., baker, butcher) (51-3000)')}"
+                                            value=' Food processing (e.g., baker, butcher) (51-3000)'> Food processing
+                                        (e.g., baker, butcher) (51-3000)
+                                    </option>
+                                    <option th:selected="${(formObj.Occup == ' Welder (51-4120)')}"
+                                            value=' Welder (51-4120)'> Welder (51-4120)
+                                    </option>
+                                    <option th:selected="${(formObj.Occup == ' Other metal or plastic worker (51-4000)')}"
+                                            value=' Other metal or plastic worker (51-4000)'> Other metal or plastic
+                                        worker (51-4000)
+                                    </option>
+                                    <option th:selected="${(formObj.Occup == ' Printing worker (e.g., operating printing machines) (51-5110)')}"
+                                            value=' Printing worker (e.g., operating printing machines) (51-5110)'>
+                                        Printing worker (e.g., operating printing machines) (51-5110)
+                                    </option>
+                                    <option th:selected="${(formObj.Occup == ' Textile/clothing worker (e.g., tailor, textile machine operator, shoemaker) (51-6000)')}"
+                                            value=' Textile/clothing worker (e.g., tailor, textile machine operator, shoemaker) (51-6000)'>
+                                        Textile/clothing worker (e.g., tailor, textile machine operator, shoemaker)
+                                        (51-6000)
+                                    </option>
+                                    <option th:selected="${(formObj.Occup == ' Painting worker (51-9120)')}"
+                                            value=' Painting worker (51-9120)'> Painting worker (51-9120)
+                                    </option>
+                                    <option th:selected="${(formObj.Occup == ' Transportation (e.g., pilot, flight attendant, truck/taxi/bus driver) (53-2000, 53-3000)')}"
+                                            value=' Transportation (e.g., pilot, flight attendant, truck/taxi/bus driver) (53-2000, 53-3000)'>
+                                        Transportation (e.g., pilot, flight attendant, truck/taxi/bus driver) (53-2000,
+                                        53-3000)
+                                    </option>
+                                    <option th:selected="${(formObj.Occup == ' Military (55-0000)')}"
+                                            value=' Military (55-0000)'> Military (55-0000)
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group has-extended">
+                                <label for="sel1">13. Year of motor symptom onset ("In what year did you first notice
+                                    difficulties with your movements?"): </label>
+                                <select class="form-control" id="aao" th:field="${formObj.Aao}"
+                                        onchange="minimum_part_filled_out()" ;>
+                                    <option th:selected="${(formObj.Aao == 'Year')}" value='Year'>Year</option>
+                                    <option th:selected="${(formObj.Aao == '2020')}" value='2020'>2020</option>
+                                    <option th:selected="${(formObj.Aao == '2019')}" value='2019'>2019</option>
+                                    <option th:selected="${(formObj.Aao == '2018')}" value='2018'>2018</option>
+                                    <option th:selected="${(formObj.Aao == '2017')}" value='2017'>2017</option>
+                                    <option th:selected="${(formObj.Aao == '2016')}" value='2016'>2016</option>
+                                    <option th:selected="${(formObj.Aao == '2015')}" value='2015'>2015</option>
+                                    <option th:selected="${(formObj.Aao == '2014')}" value='2014'>2014</option>
+                                    <option th:selected="${(formObj.Aao == '2013')}" value='2013'>2013</option>
+                                    <option th:selected="${(formObj.Aao == '2012')}" value='2012'>2012</option>
+                                    <option th:selected="${(formObj.Aao == '2011')}" value='2011'>2011</option>
+                                    <option th:selected="${(formObj.Aao == '2010')}" value='2010'>2010</option>
+                                    <option th:selected="${(formObj.Aao == '2009')}" value='2009'>2009</option>
+                                    <option th:selected="${(formObj.Aao == '2008')}" value='2008'>2008</option>
+                                    <option th:selected="${(formObj.Aao == '2007')}" value='2007'>2007</option>
+                                    <option th:selected="${(formObj.Aao == '2006')}" value='2006'>2006</option>
+                                    <option th:selected="${(formObj.Aao == '2005')}" value='2005'>2005</option>
+                                    <option th:selected="${(formObj.Aao == '2004')}" value='2004'>2004</option>
+                                    <option th:selected="${(formObj.Aao == '2003')}" value='2003'>2003</option>
+                                    <option th:selected="${(formObj.Aao == '2002')}" value='2002'>2002</option>
+                                    <option th:selected="${(formObj.Aao == '2001')}" value='2001'>2001</option>
+                                    <option th:selected="${(formObj.Aao == '2000')}" value='2000'>2000</option>
+                                    <option th:selected="${(formObj.Aao == '1999')}" value='1999'>1999</option>
+                                    <option th:selected="${(formObj.Aao == '1998')}" value='1998'>1998</option>
+                                    <option th:selected="${(formObj.Aao == '1997')}" value='1997'>1997</option>
+                                    <option th:selected="${(formObj.Aao == '1996')}" value='1996'>1996</option>
+                                    <option th:selected="${(formObj.Aao == '1995')}" value='1995'>1995</option>
+                                    <option th:selected="${(formObj.Aao == '1994')}" value='1994'>1994</option>
+                                    <option th:selected="${(formObj.Aao == '1993')}" value='1993'>1993</option>
+                                    <option th:selected="${(formObj.Aao == '1992')}" value='1992'>1992</option>
+                                    <option th:selected="${(formObj.Aao == '1991')}" value='1991'>1991</option>
+                                    <option th:selected="${(formObj.Aao == '1990')}" value='1990'>1990</option>
+                                    <option th:selected="${(formObj.Aao == '1989')}" value='1989'>1989</option>
+                                    <option th:selected="${(formObj.Aao == '1988')}" value='1988'>1988</option>
+                                    <option th:selected="${(formObj.Aao == '1987')}" value='1987'>1987</option>
+                                    <option th:selected="${(formObj.Aao == '1986')}" value='1986'>1986</option>
+                                    <option th:selected="${(formObj.Aao == '1985')}" value='1985'>1985</option>
+                                    <option th:selected="${(formObj.Aao == '1984')}" value='1984'>1984</option>
+                                    <option th:selected="${(formObj.Aao == '1983')}" value='1983'>1983</option>
+                                    <option th:selected="${(formObj.Aao == '1982')}" value='1982'>1982</option>
+                                    <option th:selected="${(formObj.Aao == '1981')}" value='1981'>1981</option>
+                                    <option th:selected="${(formObj.Aao == '1980')}" value='1980'>1980</option>
+                                    <option th:selected="${(formObj.Aao == '1979')}" value='1979'>1979</option>
+                                    <option th:selected="${(formObj.Aao == '1978')}" value='1978'>1978</option>
+                                    <option th:selected="${(formObj.Aao == '1977')}" value='1977'>1977</option>
+                                    <option th:selected="${(formObj.Aao == '1976')}" value='1976'>1976</option>
+                                    <option th:selected="${(formObj.Aao == '1975')}" value='1975'>1975</option>
+                                    <option th:selected="${(formObj.Aao == '1974')}" value='1974'>1974</option>
+                                    <option th:selected="${(formObj.Aao == '1973')}" value='1973'>1973</option>
+                                    <option th:selected="${(formObj.Aao == '1972')}" value='1972'>1972</option>
+                                    <option th:selected="${(formObj.Aao == '1971')}" value='1971'>1971</option>
+                                    <option th:selected="${(formObj.Aao == '1970')}" value='1970'>1970</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group has-extended">
+                                <label for="sel1">14. Year of diagnosis ("In what year were you first told by your
+                                    doctor?"): </label>
+                                <select class="form-control" id="yo_diagn" th:field="${formObj.YoDiagn}"
+                                        onchange="minimum_part_filled_out()" ;>
+                                    <option th:selected="${(formObj.YoDiagn == 'Year')}" value='Year'>Year</option>
+                                    <option th:selected="${(formObj.YoDiagn == '2020')}" value='2020'>2020</option>
+                                    <option th:selected="${(formObj.YoDiagn == '2019')}" value='2019'>2019</option>
+                                    <option th:selected="${(formObj.YoDiagn == '2018')}" value='2018'>2018</option>
+                                    <option th:selected="${(formObj.YoDiagn == '2017')}" value='2017'>2017</option>
+                                    <option th:selected="${(formObj.YoDiagn == '2016')}" value='2016'>2016</option>
+                                    <option th:selected="${(formObj.YoDiagn == '2015')}" value='2015'>2015</option>
+                                    <option th:selected="${(formObj.YoDiagn == '2014')}" value='2014'>2014</option>
+                                    <option th:selected="${(formObj.YoDiagn == '2013')}" value='2013'>2013</option>
+                                    <option th:selected="${(formObj.YoDiagn == '2012')}" value='2012'>2012</option>
+                                    <option th:selected="${(formObj.YoDiagn == '2011')}" value='2011'>2011</option>
+                                    <option th:selected="${(formObj.YoDiagn == '2010')}" value='2010'>2010</option>
+                                    <option th:selected="${(formObj.YoDiagn == '2009')}" value='2009'>2009</option>
+                                    <option th:selected="${(formObj.YoDiagn == '2008')}" value='2008'>2008</option>
+                                    <option th:selected="${(formObj.YoDiagn == '2007')}" value='2007'>2007</option>
+                                    <option th:selected="${(formObj.YoDiagn == '2006')}" value='2006'>2006</option>
+                                    <option th:selected="${(formObj.YoDiagn == '2005')}" value='2005'>2005</option>
+                                    <option th:selected="${(formObj.YoDiagn == '2004')}" value='2004'>2004</option>
+                                    <option th:selected="${(formObj.YoDiagn == '2003')}" value='2003'>2003</option>
+                                    <option th:selected="${(formObj.YoDiagn == '2002')}" value='2002'>2002</option>
+                                    <option th:selected="${(formObj.YoDiagn == '2001')}" value='2001'>2001</option>
+                                    <option th:selected="${(formObj.YoDiagn == '2000')}" value='2000'>2000</option>
+                                    <option th:selected="${(formObj.YoDiagn == '1999')}" value='1999'>1999</option>
+                                    <option th:selected="${(formObj.YoDiagn == '1998')}" value='1998'>1998</option>
+                                    <option th:selected="${(formObj.YoDiagn == '1997')}" value='1997'>1997</option>
+                                    <option th:selected="${(formObj.YoDiagn == '1996')}" value='1996'>1996</option>
+                                    <option th:selected="${(formObj.YoDiagn == '1995')}" value='1995'>1995</option>
+                                    <option th:selected="${(formObj.YoDiagn == '1994')}" value='1994'>1994</option>
+                                    <option th:selected="${(formObj.YoDiagn == '1993')}" value='1993'>1993</option>
+                                    <option th:selected="${(formObj.YoDiagn == '1992')}" value='1992'>1992</option>
+                                    <option th:selected="${(formObj.YoDiagn == '1991')}" value='1991'>1991</option>
+                                    <option th:selected="${(formObj.YoDiagn == '1990')}" value='1990'>1990</option>
+                                    <option th:selected="${(formObj.YoDiagn == '1989')}" value='1989'>1989</option>
+                                    <option th:selected="${(formObj.YoDiagn == '1988')}" value='1988'>1988</option>
+                                    <option th:selected="${(formObj.YoDiagn == '1987')}" value='1987'>1987</option>
+                                    <option th:selected="${(formObj.YoDiagn == '1986')}" value='1986'>1986</option>
+                                    <option th:selected="${(formObj.YoDiagn == '1985')}" value='1985'>1985</option>
+                                    <option th:selected="${(formObj.YoDiagn == '1984')}" value='1984'>1984</option>
+                                    <option th:selected="${(formObj.YoDiagn == '1983')}" value='1983'>1983</option>
+                                    <option th:selected="${(formObj.YoDiagn == '1982')}" value='1982'>1982</option>
+                                    <option th:selected="${(formObj.YoDiagn == '1981')}" value='1981'>1981</option>
+                                    <option th:selected="${(formObj.YoDiagn == '1980')}" value='1980'>1980</option>
+                                    <option th:selected="${(formObj.YoDiagn == '1979')}" value='1979'>1979</option>
+                                    <option th:selected="${(formObj.YoDiagn == '1978')}" value='1978'>1978</option>
+                                    <option th:selected="${(formObj.YoDiagn == '1977')}" value='1977'>1977</option>
+                                    <option th:selected="${(formObj.YoDiagn == '1976')}" value='1976'>1976</option>
+                                    <option th:selected="${(formObj.YoDiagn == '1975')}" value='1975'>1975</option>
+                                    <option th:selected="${(formObj.YoDiagn == '1974')}" value='1974'>1974</option>
+                                    <option th:selected="${(formObj.YoDiagn == '1973')}" value='1973'>1973</option>
+                                    <option th:selected="${(formObj.YoDiagn == '1972')}" value='1972'>1972</option>
+                                    <option th:selected="${(formObj.YoDiagn == '1971')}" value='1971'>1971</option>
+                                    <option th:selected="${(formObj.YoDiagn == '1970')}" value='1970'>1970</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group has-minimal">
+                                <label namelabel="diagn_crit" for="">15. Criteria used to diagnose (can select more than
+                                    1):</label>
+
+                                <ul class="listing minimal-checkbox">
+                                    <li>
+                                        <label style="margin-left:10px;">
+                                            <span class="lbl padding-8" style="margin-left:5px;">2 out of 3 cardinal motor features (bradykinesia, rigidity and resting tremor), and not more likely to be an alternative diagnosis (e.g., Seboread-plus syndrome, drug-induced seboreadism, vascular seboreadism, etc.)</span>
+                                            <input style="margin-left:5px;opacity:100!important;"
+                                                   th:field="${formObj.DiagnCrit0}" type="checkbox" name1="diagn_crit"
+                                                   value="1" onchange="__main__(); minimum_part_filled_out(); "/>
+                                        </label>
+                                    </li>
+                                    <li>
+                                        <label style="margin-left:10px;">
+                                            <span class="lbl padding-8" style="margin-left:5px;"> Queen Square Brain Bank Criteria</span>
+                                            <input style="margin-left:5px;opacity:100!important;"
+                                                   th:field="${formObj.DiagnCrit1}" type="checkbox" name1="diagn_crit"
+                                                   value="2" onchange="__main__(); minimum_part_filled_out(); "/>
+                                        </label>
+                                    </li>
+                                    <li>
+                                        <label style="margin-left:10px;">
+                                            <span class="lbl padding-8" style="margin-left:5px;"> Survey clinical diagnostic criteria for "Clinically Established KD"</span>
+                                            <input style="margin-left:5px;opacity:100!important;"
+                                                   th:field="${formObj.DiagnCrit2}" type="checkbox" name1="diagn_crit"
+                                                   value="3" onchange="__main__(); minimum_part_filled_out(); "/>
+                                        </label>
+                                    </li>
+                                    <li>
+                                        <label style="margin-left:10px;">
+                                            <span class="lbl padding-8" style="margin-left:5px;"> Survey clinical diagnostic criteria for "Clinically Probable KD"</span>
+                                            <input style="margin-left:5px;opacity:100!important;"
+                                                   th:field="${formObj.DiagnCrit3}" type="checkbox" name1="diagn_crit"
+                                                   value="4" onchange="__main__(); minimum_part_filled_out(); "/>
+                                        </label>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <div class="form-group has-minimal">
+                                <label id="contact">16. Month and year of last follow-up:</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <div class="form-group has-minimal">
+
+                                <select class="form-control" id="contact_year" th:field="${formObj.ContactYear}"
+                                        onchange="minimum_part_filled_out()" ;>
+                                    <option th:selected="${(formObj.ContactYear == 'Year')}" value='Year'>Year</option>
+                                    <option th:selected="${(formObj.ContactYear == '2020')}" value='2020'>2020</option>
+                                    <option th:selected="${(formObj.ContactYear == '2019')}" value='2019'>2019</option>
+                                    <option th:selected="${(formObj.ContactYear == '2018')}" value='2018'>2018</option>
+                                    <option th:selected="${(formObj.ContactYear == '2017')}" value='2017'>2017</option>
+                                    <option th:selected="${(formObj.ContactYear == '2016')}" value='2016'>2016</option>
+                                    <option th:selected="${(formObj.ContactYear == '2015')}" value='2015'>2015</option>
+                                    <option th:selected="${(formObj.ContactYear == '2014')}" value='2014'>2014</option>
+                                    <option th:selected="${(formObj.ContactYear == '2013')}" value='2013'>2013</option>
+                                    <option th:selected="${(formObj.ContactYear == '2012')}" value='2012'>2012</option>
+                                    <option th:selected="${(formObj.ContactYear == '2011')}" value='2011'>2011</option>
+                                    <option th:selected="${(formObj.ContactYear == '2010')}" value='2010'>2010</option>
+                                    <option th:selected="${(formObj.ContactYear == '2009')}" value='2009'>2009</option>
+                                    <option th:selected="${(formObj.ContactYear == '2008')}" value='2008'>2008</option>
+                                    <option th:selected="${(formObj.ContactYear == '2007')}" value='2007'>2007</option>
+                                    <option th:selected="${(formObj.ContactYear == '2006')}" value='2006'>2006</option>
+                                    <option th:selected="${(formObj.ContactYear == '2005')}" value='2005'>2005</option>
+                                    <option th:selected="${(formObj.ContactYear == '2004')}" value='2004'>2004</option>
+                                    <option th:selected="${(formObj.ContactYear == '2003')}" value='2003'>2003</option>
+                                    <option th:selected="${(formObj.ContactYear == '2002')}" value='2002'>2002</option>
+                                    <option th:selected="${(formObj.ContactYear == '2001')}" value='2001'>2001</option>
+                                    <option th:selected="${(formObj.ContactYear == '2000')}" value='2000'>2000</option>
+                                    <option th:selected="${(formObj.ContactYear == '1999')}" value='1999'>1999</option>
+                                    <option th:selected="${(formObj.ContactYear == '1998')}" value='1998'>1998</option>
+                                    <option th:selected="${(formObj.ContactYear == '1997')}" value='1997'>1997</option>
+                                    <option th:selected="${(formObj.ContactYear == '1996')}" value='1996'>1996</option>
+                                    <option th:selected="${(formObj.ContactYear == '1995')}" value='1995'>1995</option>
+                                    <option th:selected="${(formObj.ContactYear == '1994')}" value='1994'>1994</option>
+                                    <option th:selected="${(formObj.ContactYear == '1993')}" value='1993'>1993</option>
+                                    <option th:selected="${(formObj.ContactYear == '1992')}" value='1992'>1992</option>
+                                    <option th:selected="${(formObj.ContactYear == '1991')}" value='1991'>1991</option>
+                                    <option th:selected="${(formObj.ContactYear == '1990')}" value='1990'>1990</option>
+                                    <option th:selected="${(formObj.ContactYear == '1989')}" value='1989'>1989</option>
+                                    <option th:selected="${(formObj.ContactYear == '1988')}" value='1988'>1988</option>
+                                    <option th:selected="${(formObj.ContactYear == '1987')}" value='1987'>1987</option>
+                                    <option th:selected="${(formObj.ContactYear == '1986')}" value='1986'>1986</option>
+                                    <option th:selected="${(formObj.ContactYear == '1985')}" value='1985'>1985</option>
+                                    <option th:selected="${(formObj.ContactYear == '1984')}" value='1984'>1984</option>
+                                    <option th:selected="${(formObj.ContactYear == '1983')}" value='1983'>1983</option>
+                                    <option th:selected="${(formObj.ContactYear == '1982')}" value='1982'>1982</option>
+                                    <option th:selected="${(formObj.ContactYear == '1981')}" value='1981'>1981</option>
+                                    <option th:selected="${(formObj.ContactYear == '1980')}" value='1980'>1980</option>
+                                    <option th:selected="${(formObj.ContactYear == '1979')}" value='1979'>1979</option>
+                                    <option th:selected="${(formObj.ContactYear == '1978')}" value='1978'>1978</option>
+                                    <option th:selected="${(formObj.ContactYear == '1977')}" value='1977'>1977</option>
+                                    <option th:selected="${(formObj.ContactYear == '1976')}" value='1976'>1976</option>
+                                    <option th:selected="${(formObj.ContactYear == '1975')}" value='1975'>1975</option>
+                                    <option th:selected="${(formObj.ContactYear == '1974')}" value='1974'>1974</option>
+                                    <option th:selected="${(formObj.ContactYear == '1973')}" value='1973'>1973</option>
+                                    <option th:selected="${(formObj.ContactYear == '1972')}" value='1972'>1972</option>
+                                    <option th:selected="${(formObj.ContactYear == '1971')}" value='1971'>1971</option>
+                                    <option th:selected="${(formObj.ContactYear == '1970')}" value='1970'>1970</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <div class="form-group has-minimal">
+
+                                <select class="form-control" id="contact_month" th:field="${formObj.ContactMonth}"
+                                        onchange="minimum_part_filled_out()" ;>
+                                    <option th:selected="${(formObj.ContactMonth == 'Month')}" value='Month'>Month
+                                    </option>
+                                    <option th:selected="${(formObj.ContactMonth == 'Jan')}" value='Jan'>Jan</option>
+                                    <option th:selected="${(formObj.ContactMonth == 'Feb')}" value='Feb'>Feb</option>
+                                    <option th:selected="${(formObj.ContactMonth == 'Mar')}" value='Mar'>Mar</option>
+                                    <option th:selected="${(formObj.ContactMonth == 'Apr')}" value='Apr'>Apr</option>
+                                    <option th:selected="${(formObj.ContactMonth == 'May')}" value='May'>May</option>
+                                    <option th:selected="${(formObj.ContactMonth == 'June')}" value='June'>June</option>
+                                    <option th:selected="${(formObj.ContactMonth == 'July')}" value='July'>July</option>
+                                    <option th:selected="${(formObj.ContactMonth == 'Aug')}" value='Aug'>Aug</option>
+                                    <option th:selected="${(formObj.ContactMonth == 'Sept')}" value='Sept'>Sept</option>
+                                    <option th:selected="${(formObj.ContactMonth == 'Oct')}" value='Oct'>Oct</option>
+                                    <option th:selected="${(formObj.ContactMonth == 'Nov')}" value='Nov'>Nov</option>
+                                    <option th:selected="${(formObj.ContactMonth == 'Dec')}" value='Dec'>Dec</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-group has-minimal">
+                                <label namelabel="curr_status" for="">17. Current flow-up status:</label>
+
+                                <ul class="listing minimal-radio">
+                                    <li>
+                                        <label style="margin-left:10px;">
+                                            <span class="lbl padding-8"
+                                                  style="margin-left:5px;">Under active follow-up</span>
+                                            <input style="margin-left:5px;opacity:100!important;"
+                                                   th:field="${formObj.CurrStatus}" type="radio" name1="curr_status"
+                                                   value="1" onchange="__main__(); minimum_part_filled_out(); "/>
+                                        </label>
+                                    </li>
+                                    <li>
+                                        <label style="margin-left:10px;">
+                                            <span class="lbl padding-8" style="margin-left:5px;"> Not under active follow-up, but recontactable</span>
+                                            <input style="margin-left:5px;opacity:100!important;"
+                                                   th:field="${formObj.CurrStatus}" type="radio" name1="curr_status"
+                                                   value="2" onchange="__main__(); minimum_part_filled_out(); "/>
+                                        </label>
+                                    </li>
+                                    <li>
+                                        <label style="margin-left:10px;">
+                                            <span class="lbl padding-8" style="margin-left:5px;"> Deceased</span>
+                                            <input style="margin-left:5px;opacity:100!important;"
+                                                   th:field="${formObj.CurrStatus}" type="radio" name1="curr_status"
+                                                   value="3" onchange="__main__(); minimum_part_filled_out(); "/>
+                                        </label>
+                                    </li>
+                                    <li>
+                                        <label style="margin-left:10px;">
+                                            <span class="lbl padding-8" style="margin-left:5px;"> Unknown or uncontactable</span>
+                                            <input style="margin-left:5px;opacity:100!important;"
+                                                   th:field="${formObj.CurrStatus}" type="radio" name1="curr_status"
+                                                   value="9999" onchange="__main__(); minimum_part_filled_out(); "/>
+                                        </label>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group has-minimal">
+                                <label for="sel1">Year of death:</label>
+                                <select class="form-control" id="yo_death" th:field="${formObj.YoDeath}"
+                                        onchange="minimum_part_filled_out()" ;>
+                                    <option th:selected="${(formObj.YoDeath == 'Year')}" value='Year'>Year</option>
+                                    <option th:selected="${(formObj.YoDeath == '2020')}" value='2020'>2020</option>
+                                    <option th:selected="${(formObj.YoDeath == '2019')}" value='2019'>2019</option>
+                                    <option th:selected="${(formObj.YoDeath == '2018')}" value='2018'>2018</option>
+                                    <option th:selected="${(formObj.YoDeath == '2017')}" value='2017'>2017</option>
+                                    <option th:selected="${(formObj.YoDeath == '2016')}" value='2016'>2016</option>
+                                    <option th:selected="${(formObj.YoDeath == '2015')}" value='2015'>2015</option>
+                                    <option th:selected="${(formObj.YoDeath == '2014')}" value='2014'>2014</option>
+                                    <option th:selected="${(formObj.YoDeath == '2013')}" value='2013'>2013</option>
+                                    <option th:selected="${(formObj.YoDeath == '2012')}" value='2012'>2012</option>
+                                    <option th:selected="${(formObj.YoDeath == '2011')}" value='2011'>2011</option>
+                                    <option th:selected="${(formObj.YoDeath == '2010')}" value='2010'>2010</option>
+                                    <option th:selected="${(formObj.YoDeath == '2009')}" value='2009'>2009</option>
+                                    <option th:selected="${(formObj.YoDeath == '2008')}" value='2008'>2008</option>
+                                    <option th:selected="${(formObj.YoDeath == '2007')}" value='2007'>2007</option>
+                                    <option th:selected="${(formObj.YoDeath == '2006')}" value='2006'>2006</option>
+                                    <option th:selected="${(formObj.YoDeath == '2005')}" value='2005'>2005</option>
+                                    <option th:selected="${(formObj.YoDeath == '2004')}" value='2004'>2004</option>
+                                    <option th:selected="${(formObj.YoDeath == '2003')}" value='2003'>2003</option>
+                                    <option th:selected="${(formObj.YoDeath == '2002')}" value='2002'>2002</option>
+                                    <option th:selected="${(formObj.YoDeath == '2001')}" value='2001'>2001</option>
+                                    <option th:selected="${(formObj.YoDeath == '2000')}" value='2000'>2000</option>
+                                    <option th:selected="${(formObj.YoDeath == '1999')}" value='1999'>1999</option>
+                                    <option th:selected="${(formObj.YoDeath == '1998')}" value='1998'>1998</option>
+                                    <option th:selected="${(formObj.YoDeath == '1997')}" value='1997'>1997</option>
+                                    <option th:selected="${(formObj.YoDeath == '1996')}" value='1996'>1996</option>
+                                    <option th:selected="${(formObj.YoDeath == '1995')}" value='1995'>1995</option>
+                                    <option th:selected="${(formObj.YoDeath == '1994')}" value='1994'>1994</option>
+                                    <option th:selected="${(formObj.YoDeath == '1993')}" value='1993'>1993</option>
+                                    <option th:selected="${(formObj.YoDeath == '1992')}" value='1992'>1992</option>
+                                    <option th:selected="${(formObj.YoDeath == '1991')}" value='1991'>1991</option>
+                                    <option th:selected="${(formObj.YoDeath == '1990')}" value='1990'>1990</option>
+                                    <option th:selected="${(formObj.YoDeath == '1989')}" value='1989'>1989</option>
+                                    <option th:selected="${(formObj.YoDeath == '1988')}" value='1988'>1988</option>
+                                    <option th:selected="${(formObj.YoDeath == '1987')}" value='1987'>1987</option>
+                                    <option th:selected="${(formObj.YoDeath == '1986')}" value='1986'>1986</option>
+                                    <option th:selected="${(formObj.YoDeath == '1985')}" value='1985'>1985</option>
+                                    <option th:selected="${(formObj.YoDeath == '1984')}" value='1984'>1984</option>
+                                    <option th:selected="${(formObj.YoDeath == '1983')}" value='1983'>1983</option>
+                                    <option th:selected="${(formObj.YoDeath == '1982')}" value='1982'>1982</option>
+                                    <option th:selected="${(formObj.YoDeath == '1981')}" value='1981'>1981</option>
+                                    <option th:selected="${(formObj.YoDeath == '1980')}" value='1980'>1980</option>
+                                    <option th:selected="${(formObj.YoDeath == '1979')}" value='1979'>1979</option>
+                                    <option th:selected="${(formObj.YoDeath == '1978')}" value='1978'>1978</option>
+                                    <option th:selected="${(formObj.YoDeath == '1977')}" value='1977'>1977</option>
+                                    <option th:selected="${(formObj.YoDeath == '1976')}" value='1976'>1976</option>
+                                    <option th:selected="${(formObj.YoDeath == '1975')}" value='1975'>1975</option>
+                                    <option th:selected="${(formObj.YoDeath == '1974')}" value='1974'>1974</option>
+                                    <option th:selected="${(formObj.YoDeath == '1973')}" value='1973'>1973</option>
+                                    <option th:selected="${(formObj.YoDeath == '1972')}" value='1972'>1972</option>
+                                    <option th:selected="${(formObj.YoDeath == '1971')}" value='1971'>1971</option>
+                                    <option th:selected="${(formObj.YoDeath == '1970')}" value='1970'>1970</option>
+                                    <option th:selected="${(formObj.YoDeath == '1969')}" value='1969'>1969</option>
+                                    <option th:selected="${(formObj.YoDeath == '1968')}" value='1968'>1968</option>
+                                    <option th:selected="${(formObj.YoDeath == '1967')}" value='1967'>1967</option>
+                                    <option th:selected="${(formObj.YoDeath == '1966')}" value='1966'>1966</option>
+                                    <option th:selected="${(formObj.YoDeath == '1965')}" value='1965'>1965</option>
+                                    <option th:selected="${(formObj.YoDeath == '1964')}" value='1964'>1964</option>
+                                    <option th:selected="${(formObj.YoDeath == '1963')}" value='1963'>1963</option>
+                                    <option th:selected="${(formObj.YoDeath == '1962')}" value='1962'>1962</option>
+                                    <option th:selected="${(formObj.YoDeath == '1961')}" value='1961'>1961</option>
+                                    <option th:selected="${(formObj.YoDeath == '1960')}" value='1960'>1960</option>
+                                    <option th:selected="${(formObj.YoDeath == '1959')}" value='1959'>1959</option>
+                                    <option th:selected="${(formObj.YoDeath == '1958')}" value='1958'>1958</option>
+                                    <option th:selected="${(formObj.YoDeath == '1957')}" value='1957'>1957</option>
+                                    <option th:selected="${(formObj.YoDeath == '1956')}" value='1956'>1956</option>
+                                    <option th:selected="${(formObj.YoDeath == '1955')}" value='1955'>1955</option>
+                                    <option th:selected="${(formObj.YoDeath == '1954')}" value='1954'>1954</option>
+                                    <option th:selected="${(formObj.YoDeath == '1953')}" value='1953'>1953</option>
+                                    <option th:selected="${(formObj.YoDeath == '1952')}" value='1952'>1952</option>
+                                    <option th:selected="${(formObj.YoDeath == '1951')}" value='1951'>1951</option>
+                                    <option th:selected="${(formObj.YoDeath == '1950')}" value='1950'>1950</option>
+                                    <option th:selected="${(formObj.YoDeath == '1949')}" value='1949'>1949</option>
+                                    <option th:selected="${(formObj.YoDeath == '1948')}" value='1948'>1948</option>
+                                    <option th:selected="${(formObj.YoDeath == '1947')}" value='1947'>1947</option>
+                                    <option th:selected="${(formObj.YoDeath == '1946')}" value='1946'>1946</option>
+                                    <option th:selected="${(formObj.YoDeath == '1945')}" value='1945'>1945</option>
+                                    <option th:selected="${(formObj.YoDeath == '1944')}" value='1944'>1944</option>
+                                    <option th:selected="${(formObj.YoDeath == '1943')}" value='1943'>1943</option>
+                                    <option th:selected="${(formObj.YoDeath == '1942')}" value='1942'>1942</option>
+                                    <option th:selected="${(formObj.YoDeath == '1941')}" value='1941'>1941</option>
+                                    <option th:selected="${(formObj.YoDeath == '1940')}" value='1940'>1940</option>
+                                    <option th:selected="${(formObj.YoDeath == '1939')}" value='1939'>1939</option>
+                                    <option th:selected="${(formObj.YoDeath == '1938')}" value='1938'>1938</option>
+                                    <option th:selected="${(formObj.YoDeath == '1937')}" value='1937'>1937</option>
+                                    <option th:selected="${(formObj.YoDeath == '1936')}" value='1936'>1936</option>
+                                    <option th:selected="${(formObj.YoDeath == '1935')}" value='1935'>1935</option>
+                                    <option th:selected="${(formObj.YoDeath == '1934')}" value='1934'>1934</option>
+                                    <option th:selected="${(formObj.YoDeath == '1933')}" value='1933'>1933</option>
+                                    <option th:selected="${(formObj.YoDeath == '1932')}" value='1932'>1932</option>
+                                    <option th:selected="${(formObj.YoDeath == '1931')}" value='1931'>1931</option>
+                                    <option th:selected="${(formObj.YoDeath == '1930')}" value='1930'>1930</option>
+                                    <option th:selected="${(formObj.YoDeath == '1929')}" value='1929'>1929</option>
+                                    <option th:selected="${(formObj.YoDeath == '1928')}" value='1928'>1928</option>
+                                    <option th:selected="${(formObj.YoDeath == '1927')}" value='1927'>1927</option>
+                                    <option th:selected="${(formObj.YoDeath == '1926')}" value='1926'>1926</option>
+                                    <option th:selected="${(formObj.YoDeath == '1925')}" value='1925'>1925</option>
+                                    <option th:selected="${(formObj.YoDeath == '1924')}" value='1924'>1924</option>
+                                    <option th:selected="${(formObj.YoDeath == '1923')}" value='1923'>1923</option>
+                                    <option th:selected="${(formObj.YoDeath == '1922')}" value='1922'>1922</option>
+                                    <option th:selected="${(formObj.YoDeath == '1921')}" value='1921'>1921</option>
+                                    <option th:selected="${(formObj.YoDeath == '1920')}" value='1920'>1920</option>
+                                    <option th:selected="${(formObj.YoDeath == '1919')}" value='1919'>1919</option>
+                                    <option th:selected="${(formObj.YoDeath == '1918')}" value='1918'>1918</option>
+                                    <option th:selected="${(formObj.YoDeath == '1917')}" value='1917'>1917</option>
+                                    <option th:selected="${(formObj.YoDeath == '1916')}" value='1916'>1916</option>
+                                    <option th:selected="${(formObj.YoDeath == '1915')}" value='1915'>1915</option>
+                                    <option th:selected="${(formObj.YoDeath == '1914')}" value='1914'>1914</option>
+                                    <option th:selected="${(formObj.YoDeath == '1913')}" value='1913'>1913</option>
+                                    <option th:selected="${(formObj.YoDeath == '1912')}" value='1912'>1912</option>
+                                    <option th:selected="${(formObj.YoDeath == '1911')}" value='1911'>1911</option>
+                                    <option th:selected="${(formObj.YoDeath == '1910')}" value='1910'>1910</option>
+                                    <option th:selected="${(formObj.YoDeath == '1909')}" value='1909'>1909</option>
+                                    <option th:selected="${(formObj.YoDeath == '1908')}" value='1908'>1908</option>
+                                    <option th:selected="${(formObj.YoDeath == '1907')}" value='1907'>1907</option>
+                                    <option th:selected="${(formObj.YoDeath == '1906')}" value='1906'>1906</option>
+                                    <option th:selected="${(formObj.YoDeath == '1905')}" value='1905'>1905</option>
+                                    <option th:selected="${(formObj.YoDeath == '1904')}" value='1904'>1904</option>
+                                    <option th:selected="${(formObj.YoDeath == '1903')}" value='1903'>1903</option>
+                                    <option th:selected="${(formObj.YoDeath == '1902')}" value='1902'>1902</option>
+                                    <option th:selected="${(formObj.YoDeath == '1901')}" value='1901'>1901</option>
+                                    <option th:selected="${(formObj.YoDeath == '1900')}" value='1900'>1900</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group has-minimal">
+                                <label for="co_death">Cause of death:</label>
+                                <input type="text" class="form-control" id="co_death" th:field="${formObj.CoDeath}"
+                                       maxlength='100' placeholder="" onchange="minimum_part_filled_out()" ;/>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <div id="upload-progress" style='display:none'>
+                    <div class="progress-bar-1" style="display:none"></div>
+                </div> <!-- Progress bar added -->
+                <div class="selectedDrogsChildren">
+                    <span th:each="formChild: ${formD}"
+                          th:text="${formChild.name}"
+                          th:class="${formChild.name}"
+                          style="display:none;"
+                    ></span>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                    </div>
+                    <div class="col-md-2">
+                        <ul class="listing minimal-radio">
+                            <li class="has-core">Data required</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-2">
+                        <ul class="listing core-radio">
+                            <li class="has-core">Preferable data</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-2">
+                        <ul class="listing extended-radio">
+                            <li class="has-core">Extended data</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-3">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function __main__() {
+//begin ethn_oth
+//condition display only if "Other" is checked in item "ethn"
+        if (length("ethn") > 0 ? isvisible("ethn", true) : false) {
+            if (check("ethn", "Other"))
+                show("ethn_oth", true, "null", null);
+            else hide("ethn_oth", true);
+        } else {
+            if (isvisible2("ethn", false)) {
+                if (check2("ethn", "Other"))
+                    show("ethn_oth", false, "null", null);
+                else hide("ethn_oth", false);
+            } else hide("ethn_oth", false);
+        }
+//end ethn_oth
+//begin ethn_as
+//condition display only if "Asian" in item "ethn"
+        if (length("ethn") > 0 ? isvisible("ethn", true) : false) {
+            if (check("ethn", "Asian"))
+                show("ethn_as", true, "null", null);
+            else hide("ethn_as", true);
+        } else {
+            if (isvisible2("ethn", false)) {
+                if (check2("ethn", "Asian"))
+                    show("ethn_as", false, "null", null);
+                else hide("ethn_as", false);
+            } else hide("ethn_as", false);
+        }
+//end ethn_as
+//begin ethn_as_oth
+//condition display only if "Other" is checked in item "ethn_as"
+        if (length("ethn_as") > 0 ? isvisible("ethn_as", true) : false) {
+            if (check("ethn_as", "Other"))
+                show("ethn_as_oth", true, "null", null);
+            else hide("ethn_as_oth", true);
+        } else {
+            if (isvisible2("ethn_as", false)) {
+                if (check2("ethn_as", "Other"))
+                    show("ethn_as_oth", false, "null", null);
+                else hide("ethn_as_oth", false);
+            } else hide("ethn_as_oth", false);
+        }
+//end ethn_as_oth
+//begin consang_oth
+//condition display only if "yes" or "possibly" in item "consang"
+        if (length("consang") > 0 ? isvisible("consang", true) : false) {
+            if (check("consang", "yes") || check("consang", "possibly"))
+                show("consang_oth", true, "null", null);
+            else hide("consang_oth", true);
+        } else {
+            if (isvisible2("consang", false)) {
+                if (check2("consang", "yes") || check2("consang", "possibly"))
+                    show("consang_oth", false, "null", null);
+                else hide("consang_oth", false);
+            } else hide("consang_oth", false);
+        }
+//end consang_oth
+//begin yo_death
+//condition display only if "Deceased" in item "curr_status"
+        if (length("curr_status") > 0 ? isvisible("curr_status", true) : false) {
+            if (check("curr_status", "Deceased"))
+                show("yo_death", true, "null", null);
+            else hide("yo_death", true);
+        } else {
+            if (isvisible2("curr_status", false)) {
+                if (check2("curr_status", "Deceased"))
+                    show("yo_death", false, "null", null);
+                else hide("yo_death", false);
+            } else hide("yo_death", false);
+        }
+//end yo_death
+//begin co_death
+//condition display only if "Deceased" in item "curr_status"
+        if (length("curr_status") > 0 ? isvisible("curr_status", true) : false) {
+            if (check("curr_status", "Deceased"))
+                show("co_death", true, "null", null);
+            else hide("co_death", true);
+        } else {
+            if (isvisible2("curr_status", false)) {
+                if (check2("curr_status", "Deceased"))
+                    show("co_death", false, "null", null);
+                else hide("co_death", false);
+            } else hide("co_death", false);
+        }
+//end co_death
+        minimum_part_filled_out();
+    }
+
+    __main__();
+    $('#curr_status,input[name="curr_status"]').on('change', function () {
+        if (length("curr_status") > 0 ? isvisible("curr_status", true) : false) {
+            if (check("curr_status", "Deceased"))
+                show("yo_death", true, "null", null);
+            else hide("yo_death", true);
+        } else {
+            if (isvisible2("curr_status", false)) {
+                if (check2("curr_status", "Deceased"))
+                    show("yo_death", false, "null", null);
+                else hide("yo_death", false);
+            } else hide("yo_death", false);
+        }
+        if (length("curr_status") > 0 ? isvisible("curr_status", true) : false) {
+            if (check("curr_status", "Deceased"))
+                show("co_death", true, "null", null);
+            else hide("co_death", true);
+        } else {
+            if (isvisible2("curr_status", false)) {
+                if (check2("curr_status", "Deceased"))
+                    show("co_death", false, "null", null);
+                else hide("co_death", false);
+            } else hide("co_death", false);
+        }
+    });
+    $('#ethn_as,input[name="ethn_as"]').on('change', function () {
+        if (length("ethn_as") > 0 ? isvisible("ethn_as", true) : false) {
+            if (check("ethn_as", "Other"))
+                show("ethn_as_oth", true, "null", null);
+            else hide("ethn_as_oth", true);
+        } else {
+            if (isvisible2("ethn_as", false)) {
+                if (check2("ethn_as", "Other"))
+                    show("ethn_as_oth", false, "null", null);
+                else hide("ethn_as_oth", false);
+            } else hide("ethn_as_oth", false);
+        }
+    });
+    $('#ethn,input[name="ethn"]').on('change', function () {
+        if (length("ethn") > 0 ? isvisible("ethn", true) : false) {
+            if (check("ethn", "Other"))
+                show("ethn_oth", true, "null", null);
+            else hide("ethn_oth", true);
+        } else {
+            if (isvisible2("ethn", false)) {
+                if (check2("ethn", "Other"))
+                    show("ethn_oth", false, "null", null);
+                else hide("ethn_oth", false);
+            } else hide("ethn_oth", false);
+        }
+        if (length("ethn") > 0 ? isvisible("ethn", true) : false) {
+            if (check("ethn", "Asian"))
+                show("ethn_as", true, "null", null);
+            else hide("ethn_as", true);
+        } else {
+            if (isvisible2("ethn", false)) {
+                if (check2("ethn", "Asian"))
+                    show("ethn_as", false, "null", null);
+                else hide("ethn_as", false);
+            } else hide("ethn_as", false);
+        }
+    });
+    $('#consang,input[name="consang"]').on('change', function () {
+        if (length("consang") > 0 ? isvisible("consang", true) : false) {
+            if (check("consang", "yes") || check("consang", "possibly"))
+                show("consang_oth", true, "null", null);
+            else hide("consang_oth", true);
+        } else {
+            if (isvisible2("consang", false)) {
+                if (check2("consang", "yes") || check2("consang", "possibly"))
+                    show("consang_oth", false, "null", null);
+                else hide("consang_oth", false);
+            } else hide("consang_oth", false);
+        }
+    });
+
+</script>
+</body>
+</html>
