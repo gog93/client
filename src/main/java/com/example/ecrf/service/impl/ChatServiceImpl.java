@@ -20,84 +20,13 @@ public class ChatServiceImpl {
     //    @Value("${base.url}")
     private static String folderPath = "C:\\myProjects\\eCRF1\\folder\\subfolder\\example.txt";
 
-    public String run() {
-        String helper = "@helper";
-        File file=new File(folderPath);
-//        for (File file : files) {
-            String fileName = file.getAbsolutePath();
-            try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
-                String line;
-                while ((line = br.readLine()) != null) {
-                    if (line.equals(helper)) {
-                        String nextLine = br.readLine();
-                        if (nextLine == null) {
-                            try (BufferedWriter bw = new BufferedWriter(new FileWriter(fileName, true))) {
-                                bw.write("-");
-
-                            } catch (IOException e) {
-                                System.err.format("IOException: %s%n", e);
-                            }
-                            break;
-                        }
-                    } else {
-                        return null;
-
-                    }
-                }
-            } catch (IOException e) {
-                System.err.format("IOException: %s%n", e);
-            }
-
-//        }
-        return null;
-
-    }
-
-    protected List<File> getFilesModifiedAfterLastSchedule(File directory) {
-        List<File> filesModified = new ArrayList<>();
-        long currentTime = System.currentTimeMillis();
-        long fiveMinutesAgo = currentTime - (60 * 1000);
-
-        File[] fileList = directory.listFiles();
-        if (fileList != null) {
-            for (File file : fileList) {
-                if (file.isDirectory()) {
-                    // recursively call this method for subdirectories
-                    filesModified.addAll(getFilesModifiedAfterLastSchedule(file));
-                } else {
-                    try {
-                        Path filePath = file.toPath();
-                        BasicFileAttributes attributes = Files.readAttributes(filePath, BasicFileAttributes.class);
-                        FileTime lastModifiedTime = attributes.lastModifiedTime();
-
-                        if (lastModifiedTime.toMillis() >= fiveMinutesAgo) {
-                            filesModified.add(file);
-                        }
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
+    public void write(String search) {
+        File file = new File(folderPath);
+        try (FileWriter writer = new FileWriter(file)) {
+            writer.write(search); // write the text to the file
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-
-        return filesModified;
-    }
-    public static List<String> linesToArrayList(String filePath) {
-
-        List<String> lines = new ArrayList<>();
-        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
-
-            String line;
-            while ((line = br.readLine()) != null) {
-                if (!line.trim().isEmpty()) {
-                    lines.add(line);
-                }
-            }
-
-        } catch (Exception ex) {
-
-        }
-        return lines;
     }
     public String read() {
         String line = "";

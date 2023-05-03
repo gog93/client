@@ -22,12 +22,7 @@ public class ChatController {
 
     @GetMapping("/chat-text")
     public String chat(@RequestParam(name = "search", required = false) String search) {
-        File file = new File("C:\\myProjects\\eCRF1\\folder\\subfolder\\example.txt");
-        try (FileWriter writer = new FileWriter(file)) {
-            writer.write(search); // write the text to the file
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+       chatService.write(search);
         demo.run();
         String read=chatService.read();
         return read;
