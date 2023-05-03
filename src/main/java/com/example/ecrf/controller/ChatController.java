@@ -24,6 +24,7 @@ public class ChatController {
     public String chat(@RequestParam(name = "search", required = false) String search) {
        chatService.write(search);
         demo.run();
+
         String read=chatService.read();
         return read;
     }

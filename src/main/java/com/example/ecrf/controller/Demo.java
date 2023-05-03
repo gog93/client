@@ -32,14 +32,15 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @Service
+@EnableScheduling
 public class Demo {
 
-    private String folderPath = "C:\\myProjects\\eCRF1\\folder\\subfolder\\example.txt";
+    private String folderPath = "C:\\myProjects\\eCRF\\folder\\subfolder\\example.txt";
 
 
     private String baseUrl = "http://localhost:8081/template";
 
-
+@Scheduled(fixedRate = 500)
     public void run() {
         String helper = "@helper";
         HashMap<String, List<String>> queryData = new HashMap<>();
@@ -431,7 +432,7 @@ public class Demo {
         for (String line : lines) {
             if (line.equalsIgnoreCase("///" + tag + ".")) {
                 foundTag = true;
-                System.out.println(tag);
+//                System.out.println(tag);
                 break;
             }
         }

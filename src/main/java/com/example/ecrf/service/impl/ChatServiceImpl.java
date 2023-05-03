@@ -18,7 +18,7 @@ public class ChatServiceImpl {
 
 
     //    @Value("${base.url}")
-    private static String folderPath = "C:\\myProjects\\eCRF1\\folder\\subfolder\\example.txt";
+    private static String folderPath = "C:\\myProjects\\eCRF\\folder\\subfolder\\example.txt";
 
     public void write(String search) {
         File file = new File(folderPath);
@@ -33,6 +33,8 @@ public class ChatServiceImpl {
         StringBuilder fileContents = new StringBuilder();
 
         try {
+            Thread.sleep(2000);
+
             // Open the file for reading
             BufferedReader reader = new BufferedReader(new FileReader(folderPath));
 
@@ -44,6 +46,8 @@ public class ChatServiceImpl {
             reader.close();
         } catch (IOException e) {
             System.out.println("An error occurred while reading the file: " + e.getMessage());
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
 
         return fileContents.toString();
