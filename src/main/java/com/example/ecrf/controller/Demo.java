@@ -40,7 +40,7 @@ public class Demo {
 
     private String baseUrl = "http://localhost:8081/template";
 
-@Scheduled(fixedRate = 500)
+@Scheduled(fixedRate = 1000)
     public void run() {
         String helper = "@helper";
         HashMap<String, List<String>> queryData = new HashMap<>();

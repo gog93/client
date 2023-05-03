@@ -21,10 +21,9 @@ public class ChatController {
     private final ChatServiceImpl chatService;
 
     @GetMapping("/chat-text")
-    public String chat(@RequestParam(name = "search", required = false) String search) {
+    public String chat(@RequestParam(name = "search", required = false) String search) throws InterruptedException {
        chatService.write(search);
         demo.run();
-
         String read=chatService.read();
         return read;
     }
