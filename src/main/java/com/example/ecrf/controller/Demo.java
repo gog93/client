@@ -40,7 +40,7 @@ public class Demo {
 
     private String baseUrl = "http://localhost:8081/template";
 
-@Scheduled(fixedRate = 1000)
+@Scheduled(fixedRate = 100)
     public void run() {
         String helper = "@helper";
         HashMap<String, List<String>> queryData = new HashMap<>();
@@ -73,15 +73,18 @@ public class Demo {
         }
         getTemplateTag(fileName);
 
+    if(!lines.isEmpty()) {
         String s = lines.get(0);
+
         if (s != null && s.startsWith(helper)) {
-            int emailIndex = helper.length()+1;
+            int emailIndex = helper.length() + 1;
             int dotIndex = s.length();
             if (dotIndex > emailIndex) {
                 String email = s.substring(emailIndex, dotIndex);
                 tagEmail.append(email);
             }
         }
+    }
         String lastLine = getLastNonEmptyLineOfFile(fileName);
         Pattern pattern = Pattern.compile("^///([a-z]+)\\.$");
         Pattern pattern2 = Pattern.compile("@(\\w+-)?(\\w+)\\.");
@@ -193,7 +196,7 @@ public class Demo {
                     shouldContinue = isLastLineAnswered(fileName);
                     while (!shouldContinue) {
                         shouldContinue = isLastLineAnswered(fileName);
-                        Thread.sleep(1000); // Wait for 1 second before checking again
+//                        Thread.sleep(1000); // Wait for 1 second before checking again
                     }
                     writer.append("\n").append(questions.get(i));
                     writer.flush();
@@ -223,8 +226,8 @@ public class Demo {
             deleteEmailSection(fileName);
         } catch (IOException ex) {
             log.info("Error while writing to the file");
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
+//        } catch (InterruptedException e) {
+//            throw new RuntimeException(e);
         }
     }
 
@@ -308,8 +311,11 @@ public class Demo {
 
     public static boolean isLastLineAnswered(String filePath) {
         List<String> lines = linesToArrayList(filePath);
-
-        return lines.get(lines.size() - 1).endsWith("///");
+        StringBuilder lastLine = new StringBuilder();
+        if (!lines.isEmpty()) {
+            lastLine.append(lines.get(lines.size() - 1));
+        }
+        return lastLine.toString().endsWith("///");
     }
 
 

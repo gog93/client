@@ -1,5 +1,7 @@
 package com.example.ecrf.service.impl;
 
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
@@ -12,6 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 
 @Service
+@EnableScheduling
 public class ChatServiceImpl {
     //    @Value("${folder.path}")
     private static String baseUrl = "http://localhost:8081/template";
@@ -28,6 +31,7 @@ public class ChatServiceImpl {
             e.printStackTrace();
         }
     }
+    @Scheduled(fixedRate = 1000)
     public String read() {
         String line = "";
         StringBuilder fileContents = new StringBuilder();
