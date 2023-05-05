@@ -5,13 +5,6 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.attribute.BasicFileAttributes;
-import java.nio.file.attribute.FileTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 @Service
 @EnableScheduling
@@ -31,6 +24,7 @@ public class ChatServiceImpl {
             e.printStackTrace();
         }
     }
+
     @Scheduled(fixedRate = 1000)
     public String read() {
         String line = "";

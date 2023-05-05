@@ -14,7 +14,6 @@ import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -40,7 +39,7 @@ public class Demo {
 
     private String baseUrl = "http://localhost:8081/template";
 
-@Scheduled(fixedRate = 100)
+    @Scheduled(fixedRate = 100)
     public void run() {
         String helper = "@helper";
         HashMap<String, List<String>> queryData = new HashMap<>();
@@ -73,18 +72,18 @@ public class Demo {
         }
         getTemplateTag(fileName);
 
-    if(!lines.isEmpty()) {
-        String s = lines.get(0);
+        if (!lines.isEmpty()) {
+            String s = lines.get(0);
 
-        if (s != null && s.startsWith(helper)) {
-            int emailIndex = helper.length() + 1;
-            int dotIndex = s.length();
-            if (dotIndex > emailIndex) {
-                String email = s.substring(emailIndex, dotIndex);
-                tagEmail.append(email);
+            if (s != null && s.startsWith(helper)) {
+                int emailIndex = helper.length() + 1;
+                int dotIndex = s.length();
+                if (dotIndex > emailIndex) {
+                    String email = s.substring(emailIndex, dotIndex);
+                    tagEmail.append(email);
+                }
             }
         }
-    }
         String lastLine = getLastNonEmptyLineOfFile(fileName);
         Pattern pattern = Pattern.compile("^///([a-z]+)\\.$");
         Pattern pattern2 = Pattern.compile("@(\\w+-)?(\\w+)\\.");
